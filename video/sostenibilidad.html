@@ -23,19 +23,19 @@
       max-height: 1920px;
       margin: 0 auto;
       position: relative;
-      background: linear-gradient(180deg, #0A0A0A 0%, #1B365D 100%);
+      background: linear-gradient(180deg, #0A0A0A 0%, #1B365D 50%, #0A0A0A 100%);
       overflow: hidden;
     }
     
-    /* Partículas de luz */
+    /* Partículas - más suaves */
     .particle {
       position: absolute;
-      width: 4px;
-      height: 4px;
+      width: 3px;
+      height: 3px;
       background: #00B4D8;
       border-radius: 50%;
       opacity: 0;
-      box-shadow: 0 0 6px 2px #00B4D8;
+      box-shadow: 0 0 8px 2px rgba(0,180,216,0.5);
     }
     
     /* Gota de agua */
@@ -52,54 +52,54 @@
     .water-drop svg {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 0 20px #00B4D8);
+      filter: drop-shadow(0 0 15px rgba(0,180,216,0.6));
     }
     
-    /* Ripple effect */
+    /* Ripple effect - más suave */
     .ripple {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 3px solid #00B4D8;
+      border: 2px solid rgba(0,180,216,0.6);
       border-radius: 50%;
       opacity: 0;
-      box-shadow: 0 0 30px #00B4D8, inset 0 0 30px #00B4D8;
+      box-shadow: 0 0 20px rgba(0,180,216,0.3), inset 0 0 15px rgba(0,180,216,0.2);
     }
     
     /* Texto Sostenibilidad */
     .text-sostenibilidad {
       position: absolute;
-      top: 25%;
+      top: 20%;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 72px;
+      font-size: clamp(48px, 10vw, 72px);
       font-weight: 800;
       color: #FFFFFF;
-      text-shadow: 0 0 40px #00B4D8;
+      text-shadow: 0 0 30px rgba(0,180,216,0.8);
       opacity: 0;
-      letter-spacing: 8px;
+      letter-spacing: 6px;
       white-space: nowrap;
     }
     
     /* Subtítulo */
     .subtitulo {
       position: absolute;
-      top: 40%;
+      top: 35%;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 36px;
+      font-size: clamp(24px, 5vw, 36px);
       font-weight: 300;
       color: #FF8B00;
-      text-shadow: 0 0 20px #FF8B00;
+      text-shadow: 0 0 15px rgba(255,139,0,0.6);
       opacity: 0;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
     }
     
     /* Logo */
     .logo-container {
       position: absolute;
-      bottom: 15%;
+      bottom: 12%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -107,14 +107,14 @@
     }
     
     .logo-container .logo {
-      font-size: 48px;
+      font-size: clamp(32px, 6vw, 48px);
       font-weight: 800;
       color: #FFFFFF;
       letter-spacing: 4px;
     }
     
     .logo-container .tagline {
-      font-size: 18px;
+      font-size: clamp(14px, 2.5vw, 18px);
       font-weight: 300;
       color: #00B4D8;
       letter-spacing: 2px;
@@ -122,28 +122,44 @@
     }
     
     .logo-container .slogan {
-      font-size: 20px;
+      font-size: clamp(16px, 3vw, 20px);
       font-weight: 600;
       color: #FF8B00;
       letter-spacing: 2px;
-      margin-top: 16px;
+      margin-top: 12px;
     }
 
-    /* Glow overlay */
+    /* Glow central */
     .glow-center {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(0,180,216,0.3) 0%, transparent 70%);
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(0,180,216,0.2) 0%, transparent 70%);
       opacity: 0;
+    }
+    
+    /* Fade overlay para suavizar */
+    .fade-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0A0A0A;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
     }
   </style>
 </head>
 <body>
   <div class="container" id="video">
+    
+    <!-- Fade overlay -->
+    <div class="fade-overlay" id="fadeIn"></div>
     
     <!-- Partículas -->
     <div id="particles"></div>
@@ -155,14 +171,14 @@
               fill="url(#dropGrad)" stroke="#00B4D8" stroke-width="2"/>
         <defs>
           <linearGradient id="dropGrad" x1="40" y1="5" x2="40" y2="95" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#00B4D8" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#1B365D" stop-opacity="0.6"/>
+            <stop offset="0%" stop-color="#00B4D8" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#1B365D" stop-opacity="0.7"/>
           </linearGradient>
         </defs>
       </svg>
     </div>
     
-    <!-- Ripple -->
+    <!-- Ripples -->
     <div class="ripple" id="ripple1"></div>
     <div class="ripple" id="ripple2"></div>
     <div class="ripple" id="ripple3"></div>
@@ -184,127 +200,136 @@
   </div>
   
   <script>
-    // Crear partículas
+    // Crear partículas - menos y más分布均匀
     const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 40; i++) {
       const p = document.createElement('div');
       p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.top = Math.random() * 100 + '%';
-      p.style.animationDelay = Math.random() * 2 + 's';
+      p.style.left = (10 + Math.random() * 80) + '%';
+      p.style.top = (10 + Math.random() * 80) + '%';
       particlesContainer.appendChild(p);
     }
     
-    // Timeline principal
+    // Timeline principal - más suave
     const tl = anime.timeline({
       easing: 'easeOutExpo',
       duration: 3000
     });
     
-    // 0-2s: Aparecen partículas
+    // Fade in inicial
     tl.add({
+      targets: '#fadeIn',
+      opacity: [1, 0],
+      duration: 800,
+      easing: 'easeOutQuad'
+    })
+    
+    // 0-2s: Aparecen partículas suavemente
+    .add({
       targets: '.particle',
-      opacity: [0, 0.8],
+      opacity: [0, 0.7],
       scale: [0, 1],
-      delay: anime.stagger(30),
-      duration: 1500
-    })
-    
-    // 2-4s: Gota cae
-    .add({
-      targets: '#waterDrop',
-      opacity: [0, 1],
-      translateY: [0, 0],
-      duration: 100
-    }, '-=500')
-    .add({
-      targets: '#waterDrop',
-      translateY: ['-100px', '45vh'],
+      delay: anime.stagger(40),
       duration: 2000,
-      easing: 'easeInQuad'
-    })
+      easing: 'easeOutQuad'
+    }, '-=300')
     
-    // 4-5s: Gota desaparece, ripple inicio
+    // 2-4s: Gota aparece y cae
+    .add({
+      targets: '#waterDrop',
+      opacity: [{ value: 0 }, { value: 1, duration: 300 }],
+      translateY: ['-100px', '45vh'],
+      duration: 2500,
+      easing: 'easeInQuad'
+    }, '+=500')
+    
+    // 4-5s: Gota desaparece con fade suave
     .add({
       targets: '#waterDrop',
       opacity: [1, 0],
-      scale: [1, 2],
-      duration: 300,
+      scale: [1, 1.5],
+      duration: 500,
       easing: 'easeOutQuad'
-    }, '+=200')
+    })
     
-    // Ripples
+    // Ripples - más suaves y lentos
     .add({
       targets: '#ripple1',
-      opacity: [0.8, 0],
-      width: ['0px', '400px'],
-      height: ['0px', '400px'],
-      duration: 1500,
+      opacity: [{ value: 0.7 }, { value: 0, duration: 2000 }],
+      width: ['0px', '350px'],
+      height: ['0px', '350px'],
+      duration: 2000,
       easing: 'easeOutQuad'
-    }, '-=200')
+    }, '-=300')
     .add({
       targets: '#ripple2',
-      opacity: [0.6, 0],
-      width: ['0px', '600px'],
-      height: ['0px', '600px'],
-      duration: 1800,
+      opacity: [{ value: 0.5 }, { value: 0, duration: 2500 }],
+      width: ['0px', '500px'],
+      height: ['0px', '500px'],
+      duration: 2500,
       easing: 'easeOutQuad'
-    }, '-=1200')
+    }, '-=2000')
     .add({
       targets: '#ripple3',
-      opacity: [0.4, 0],
-      width: ['0px', '800px'],
-      height: ['0px', '800px'],
-      duration: 2100,
+      opacity: [{ value: 0.3 }, { value: 0, duration: 3000 }],
+      width: ['0px', '650px'],
+      height: ['0px', '650px'],
+      duration: 3000,
       easing: 'easeOutQuad'
-    }, '-=1600')
+    }, '-=2500')
     
-    // Glow
+    // Glow - suave
     .add({
       targets: '#glow',
-      opacity: [0, 1, 0],
-      scale: [0.5, 1.5],
-      duration: 2000
-    }, '-=1800')
+      opacity: [{ value: 0.8, duration: 500 }, { value: 0, duration: 2000 }],
+      scale: [{ value: 0.5 }, { value: 2 }],
+      duration: 2500
+    }, '-=2800')
     
-    // Título
+    // Título - entra suave
     .add({
       targets: '#title',
-      opacity: [0, 1],
-      translateY: [30, 0],
-      translateX: [-50, -50],
-      duration: 800
-    }, '-=1000')
+      opacity: [{ value: 0 }, { value: 1, duration: 800 }],
+      translateY: [{ value: 40 }, { value: 0 }],
+      duration: 1200,
+      easing: 'easeOutQuart'
+    }, '-=800')
     
     // Subtítulo
     .add({
       targets: '#subtitulo',
-      opacity: [0, 1],
-      scale: [0.8, 1],
-      duration: 600,
-      easing: 'easeOutBack'
-    }, '+=200')
+      opacity: [{ value: 0 }, { value: 1, duration: 600 }],
+      scale: [{ value: 0.9 }, { value: 1 }],
+      duration: 800,
+      easing: 'easeOutQuart'
+    }, '+=100')
     
     // Logo aparece
     .add({
       targets: '#logo',
-      opacity: [0, 1],
-      translateY: [50, 0],
-      duration: 1000,
-      easing: 'easeOutQuad'
+      opacity: [{ value: 0 }, { value: 1, duration: 1000 }],
+      translateY: [{ value: 30 }, { value: 0 }],
+      duration: 1200,
+      easing: 'easeOutQuart'
     }, '+=500')
     
-    // Fade out final
+    // Pausa para ver
+    .add({
+      targets: {},
+      duration: 2000
+    })
+    
+    // Fade out final - suave
     .add({
       targets: '.container',
       opacity: [1, 0],
-      duration: 1000,
+      duration: 1500,
       easing: 'easeInQuad'
-    }, '+=2000');
+    });
     
     // Loop
     tl.finished.then(() => {
-      setTimeout(() => location.reload(), 3000);
+      setTimeout(() => location.reload(), 2000);
     });
   </script>
 </body>
