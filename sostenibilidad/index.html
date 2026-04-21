@@ -2,15 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Cultura T - Sostenibilidad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultura T - Sostenibilidad 45s</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      background: #111111;
+      background: #111;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -19,185 +19,141 @@
       overflow: hidden;
     }
     
-    /* Marco vertical tipo teléfono - 9:16 */
     .phone-frame {
       position: relative;
       width: 100vw;
       height: 100vh;
       max-width: 450px;
       max-height: 800px;
-      background: #0A0A0A;
+      background: #000;
       overflow: hidden;
-      border-radius: 0;
-      box-shadow: 0 0 60px rgba(134, 59, 255, 0.3);
+      box-shadow: 0 0 80px rgba(134, 59, 255, 0.4);
     }
     
-    /* ===== ANIMACIONES CSS ===== */
-    
-    @keyframes scaleIn {
-      from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    /* ===== CAPAS DE IMAGEN (Ken Burns) ===== */
+    .bg-image {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      filter: brightness(0.4) saturate(1.2);
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Imagen 1: Agua/Naturaleza */
+    .bg-1 {
+      background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80');
     }
     
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
+    /* Imagen 2: Montañas/Turismo */
+    .bg-2 {
+      background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80');
     }
     
-    @keyframes textGlow {
-      0%, 100% { text-shadow: 0 0 40px #863bff; }
-      50% { text-shadow: 0 0 80px #863bff, 0 0 120px #47bfff; }
+    /* Imagen 3: Bosque/Verde */
+    .bg-3 {
+      background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80');
     }
     
-    /* ===== ELEMENTOS ===== */
+    /* Imagen 4: Atardecer/Naranja */
+    .bg-4 {
+      background-image: url('https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200&q=80');
+    }
     
-    .bg {
+    /* Overlay oscuro para texto */
+    .overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at center top, #1B365D 0%, #0A0A0A 60%);
-    }
-    
-    .particula {
-      position: absolute;
-      background: #863bff;
-      border-radius: 50%;
-      opacity: 0;
-    }
-    
-    /* Logo FONTUR */
-    .logo-fontur {
-      position: absolute;
-      top: 25%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      width: 120px;
-      height: 120px;
-      opacity: 0;
-      z-index: 10;
-    }
-    
-    .logo-fontur svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 25px #863bff);
-    }
-    
-    /* Título */
-    .titulo {
-      position: absolute;
-      top: 12%;
-      left: 50%;
-      transform: translateX(-50%) scale(0);
-      font-size: clamp(36px, 9vw, 56px);
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: 6px;
-      opacity: 0;
-      z-index: 10;
-      text-shadow: 0 0 40px #863bff;
-    }
-    
-    .linea {
-      position: absolute;
-      top: 19%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
-      opacity: 0;
-      z-index: 10;
-    }
-    
-    /* Gota */
-    .gota {
-      position: absolute;
-      top: -150px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 100px;
-      opacity: 0;
+      background: linear-gradient(180deg, 
+        rgba(0,0,0,0.7) 0%, 
+        rgba(0,0,0,0.3) 30%,
+        rgba(0,0,0,0.3) 70%,
+        rgba(0,0,0,0.8) 100%);
       z-index: 5;
     }
     
-    .gota svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 15px #47bfff);
-    }
+    /* ===== TEXTOS CINEMÁTICOS ===== */
     
-    /* Ripples */
-    .ripple {
-      position: absolute;
-      top: 38%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 2px solid #47bfff;
-      border-radius: 50%;
-      opacity: 0;
-      z-index: 4;
-    }
-    
-    /* Texto */
-    .texto-principal {
+    .big-title {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: clamp(22px, 5.5vw, 36px);
-      font-weight: 600;
-      color: #FFFFFF;
+      font-size: clamp(40px, 10vw, 64px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 8px;
       text-align: center;
-      letter-spacing: 2px;
       opacity: 0;
-      line-height: 1.5;
+      z-index: 10;
+      text-shadow: 0 0 60px rgba(134, 59, 255, 0.8), 0 0 120px rgba(71, 191, 255, 0.5);
+    }
+    
+    .subtitle {
+      position: absolute;
+      top: 62%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(18px, 4.5vw, 28px);
+      font-weight: 300;
+      color: #FF8B00;
+      letter-spacing: 4px;
+      text-align: center;
+      opacity: 0;
       z-index: 10;
     }
     
-    .texto-principal span {
-      color: #FF8B00;
-    }
-    
-    /* Datos CIP */
-    .dato-cip {
+    .tagline {
       position: absolute;
-      top: 40%;
+      top: 8%;
       left: 50%;
       transform: translateX(-50%);
+      font-size: clamp(12px, 2.5vw, 16px);
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      opacity: 0;
+      z-index: 10;
+    }
+    
+    /* Estadísticas */
+    .stat-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       text-align: center;
       opacity: 0;
       z-index: 10;
     }
     
-    .dato-cip .numero {
-      font-size: clamp(70px, 18vw, 120px);
+    .stat-number {
+      font-size: clamp(80px, 22vw, 140px);
       font-weight: 800;
       color: #47bfff;
-      text-shadow: 0 0 50px #47bfff;
       line-height: 1;
+      text-shadow: 0 0 80px rgba(71, 191, 255, 0.8);
     }
     
-    .dato-cip .etiqueta {
-      font-size: clamp(14px, 3vw, 22px);
+    .stat-label {
+      font-size: clamp(14px, 3.5vw, 24px);
       font-weight: 600;
-      color: #FFFFFF;
-      letter-spacing: 4px;
-      margin-top: 5px;
+      color: #fff;
+      letter-spacing: 6px;
+      margin-top: 10px;
     }
     
-    /* Logo CT */
-    .logo-ct {
+    /* Logo */
+    .logo-bottom {
       position: absolute;
-      bottom: 10%;
+      bottom: 8%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -205,154 +161,175 @@
       z-index: 10;
     }
     
-    .logo-ct .marca {
+    .logo-bottom .brand {
       font-size: clamp(28px, 7vw, 44px);
       font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: 3px;
+      color: #fff;
+      letter-spacing: 4px;
     }
     
-    .logo-ct .tagline {
-      font-size: clamp(11px, 2.5vw, 16px);
-      color: #863bff;
-      letter-spacing: 2px;
-      margin-top: 6px;
-    }
-    
-    .logo-ct .slogan {
-      font-size: clamp(10px, 2.5vw, 14px);
+    .logo-bottom .slogan {
+      font-size: clamp(11px, 2.5vw, 15px);
       color: #FF8B00;
-      letter-spacing: 2px;
-      margin-top: 5px;
+      letter-spacing: 3px;
+      margin-top: 8px;
+    }
+    
+    /* Partículas flotantes */
+    .particle {
+      position: absolute;
+      background: rgba(134, 59, 255, 0.6);
+      border-radius: 50%;
+      z-index: 4;
+    }
+    
+    /* Línea decorativa */
+    .deco-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
+      z-index: 10;
     }
     
     /* Fade final */
-    .fade-negro {
+    .fadeout {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0A0A0A;
+      background: #000;
       opacity: 0;
-      z-index: 20;
-      pointer-events: none;
+      z-index: 15;
+    }
+    
+    /* Countdown */
+    .countdown {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(12px, 2.5vw, 16px);
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 3px;
+      z-index: 12;
+      opacity: 0;
     }
   </style>
 </head>
 <body>
+
+<div class="phone-frame" id="video">
+
+  <!-- Fondos con Ken Burns -->
+  <div class="bg-image bg-1" id="bg1"></div>
+  <div class="bg-image bg-2" id="bg2"></div>
+  <div class="bg-image bg-3" id="bg3"></div>
+  <div class="bg-image bg-4" id="bg4"></div>
   
-  <!-- Marco vertical 9:16 centrado -->
-  <div class="phone-frame" id="video">
-    <div class="bg"></div>
-    <div id="particulas"></div>
-    
-    <!-- Logo FONTUR -->
-    <div class="logo-fontur" id="logoFontur">
-      <svg viewBox="0 0 48 46" fill="none">
-        <path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
-        <ellipse cx="12" cy="30" rx="5" ry="12" fill="#47bfff" transform="rotate(-8 12 30)"/>
-        <ellipse cx="38" cy="33" rx="6" ry="14" fill="#47bfff" transform="rotate(-8 38 33)"/>
-      </svg>
-    </div>
-    
-    <div class="titulo" id="titulo">SOSTENIBILIDAD</div>
-    <div class="linea" id="linea"></div>
-    
-    <!-- Gota -->
-    <div class="gota" id="gota">
-      <svg viewBox="0 0 80 100" fill="none">
-        <path d="M40 5C40 5 10 45 10 65C10 82 23.5 95 40 95C56.5 95 70 82 70 65C70 45 40 5 40 5Z" 
-              fill="url(#gradGota)" stroke="#47bfff" stroke-width="2"/>
-        <ellipse cx="30" cy="65" rx="10" ry="5" fill="rgba(255,255,255,0.4)"/>
-        <defs>
-          <linearGradient id="gradGota" x1="40" y1="5" x2="40" y2="95">
-            <stop offset="0%" stop-color="#47bfff"/>
-            <stop offset="100%" stop-color="#863bff"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-    
-    <!-- Ripples -->
-    <div class="ripple" id="ripple1" style="width:50px;height:50px;"></div>
-    <div class="ripple" id="ripple2" style="width:50px;height:50px;"></div>
-    <div class="ripple" id="ripple3" style="width:50px;height:50px;"></div>
-    
-    <div class="texto-principal" id="textoPrincipal">
-      El turismo que<br><span>deja huella</span>
-    </div>
-    
-    <div class="dato-cip" id="datoCip">
-      <div class="numero" id="numeroCip">0</div>
-      <div class="etiqueta">GESTIÓN EFICIENTE</div>
-    </div>
-    
-    <div class="logo-ct" id="logoCT">
-      <div class="marca">cultura t®</div>
-      <div class="tagline">Gestión y desarrollo</div>
-      <div class="slogan">Turismo con sentido</div>
-    </div>
-    
-    <div class="fade-negro" id="fadeNegro"></div>
+  <!-- Overlay -->
+  <div class="overlay"></div>
+  
+  <!-- Partículas -->
+  <div id="particles"></div>
+  
+  <!-- Contenido -->
+  <div class="tagline" id="tagline">FONTUR • CULTURA T</div>
+  
+  <div class="big-title" id="title">SOSTENIBILIDAD</div>
+  
+  <div class="deco-line" id="decoLine" style="top: 22%; width: 0;"></div>
+  
+  <div class="subtitle" id="subtitle">El turismo que deja huella</div>
+  
+  <div class="stat-container" id="statContainer">
+    <div class="stat-number" id="statNumber">0</div>
+    <div class="stat-label">GESTIÓN EFICIENTE</div>
   </div>
   
-  <script>
-    // Partículas
-    const container = document.getElementById('particulas');
-    for (let i = 0; i < 30; i++) {
-      const p = document.createElement('div');
-      p.className = 'particula';
-      p.style.left = (5 + Math.random() * 90) + '%';
-      p.style.top = (5 + Math.random() * 90) + '%';
-      p.style.width = (2 + Math.random() * 3) + 'px';
-      p.style.height = p.style.width;
-      container.appendChild(p);
-    }
-    
-    // Timeline GSAP - 45 segundos
-    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-    
-    // 0-3s: Logo pájaro
-    tl.to('#logoFontur', { scale: 1, opacity: 1, duration: 1.5 }, 0)
-      .to('#logoFontur', { scale: 1.1, duration: 1.5 }, 1.5)
-      .to('#logoFontur', { scale: 1, duration: 0.5 }, 3);
-    
-    // 3-8s: Título
-    tl.to('#titulo', { scale: 1, opacity: 1, duration: 1.2 }, 3.2)
-      .to('#linea', { width: 200, opacity: 1, duration: 0.8 }, 4);
-    
-    // 8-15s: Gota
-    tl.to('#gota', { y: '55vh', opacity: 1, duration: 5, ease: "power1.in" }, 8)
-      .to('#gota', { scale: 1.5, opacity: 0, duration: 0.5 }, 13);
-    
-    // 14-20s: Ripples
-    tl.to('#ripple1', { width: 300, height: 300, opacity: 0.7, duration: 2 }, 14)
-      .to('#ripple1', { opacity: 0, duration: 0.5 }, 16)
-      .to('#ripple2', { width: 450, height: 450, opacity: 0.5, duration: 2.5 }, 15.5)
-      .to('#ripple2', { opacity: 0, duration: 0.5 }, 18)
-      .to('#ripple3', { width: 600, height: 600, opacity: 0.3, duration: 3 }, 17)
-      .to('#ripple3', { opacity: 0, duration: 0.5 }, 20);
-    
-    // 20-25s: Texto
-    tl.to('#textoPrincipal', { opacity: 1, duration: 1.2 }, 20.5);
-    
-    // 25-32s: Datos
-    tl.to('#textoPrincipal', { opacity: 0, duration: 0.5 }, 25)
-      .to('#datoCip', { opacity: 1, duration: 0.8 }, 25.5)
-      .to('#numeroCip', { innerText: 73, duration: 2, snap: { innerText: 1 } }, 26)
-      .to('#datoCip', { opacity: 0, duration: 0.8 }, 31);
-    
-    // 32-38s: Logo CT
-    tl.to('#logoCT', { opacity: 1, duration: 1.2 }, 32);
-    
-    // 38-45s: Fade
-    tl.to('#fadeNegro', { opacity: 1, duration: 2 }, 38)
-      .to(['#logoFontur', '#titulo', '#linea', '#logoCT'], { opacity: 0, duration: 1 }, 38);
-    
-    tl.call(() => {
-      document.getElementById('video').innerHTML += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:16px;letter-spacing:3px;text-align:center;z-index:100;">GRABA ESTA PANTALLA<br><span style="font-size:12px;color:#FF8B00;">45 segundos</span></div>';
-    });
-  </script>
+  <div class="logo-bottom" id="logoBottom">
+    <div class="brand">cultura t®</div>
+    <div class="slogan">Turismo con sentido</div>
+  </div>
+  
+  <div class="countdown" id="countdown">45s</div>
+  
+  <div class="fadeout" id="fadeout"></div>
+  
+</div>
+
+<script>
+  // Crear partículas
+  const pc = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.width = (2 + Math.random() * 4) + 'px';
+    p.style.height = p.style.width;
+    pc.appendChild(p);
+  }
+  
+  // Timeline GSAP - 45 segundos
+  const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+  
+  // ===== 0-3s: Entrada dramática =====
+  tl.to('#bg1', { opacity: 1, scale: 1.1, duration: 3 }, 0)
+    .from('#bg1', { scale: 1.3, duration: 4 }, 0)
+    .to('#tagline', { opacity: 1, duration: 1 }, 0.5)
+    .to('#title', { opacity: 1, scale: 1, duration: 1.5 }, 1)
+    .to('#decoLine', { width: 200, opacity: 1, duration: 1 }, 1.5);
+  
+  // ===== 3-8s: Transición imagen 2 =====
+  tl.to('#bg1', { opacity: 0, scale: 1.2, duration: 2 }, 4)
+    .to('#bg2', { opacity: 1, scale: 1.15, duration: 2 }, 5)
+    .from('#bg2', { scale: 1.4, duration: 4 }, 5)
+    .to('#subtitle', { opacity: 1, duration: 1 }, 5.5);
+  
+  // ===== 8-13s: Transición imagen 3 =====
+  tl.to('#subtitle', { opacity: 0, y: -20, duration: 0.8 }, 8)
+    .to('#title', { opacity: 0, scale: 0.8, duration: 1 }, 8)
+    .to('#bg2', { opacity: 0, scale: 1.1, duration: 1.5 }, 10)
+    .to('#bg3', { opacity: 1, scale: 1.1, duration: 1.5 }, 11)
+    .from('#bg3', { scale: 1.3, duration: 4 }, 11);
+  
+  // ===== 13-20s: Estadísticas =====
+  tl.to('#statContainer', { opacity: 1, duration: 1 }, 13)
+    .to('#statNumber', { innerText: 73, duration: 2, snap: { innerText: 1 } }, 14)
+    // Partículas se aceleran
+    .to('.particle', { opacity: 0.8, scale: 1.5, duration: 0.5, stagger: 0.05 }, 15)
+    .to('.particle', { opacity: 0.3, scale: 1, duration: 3, stagger: 0.03 }, 16);
+  
+  // ===== 20-25s: Transición imagen 4 (atardecer) =====
+  tl.to('#statContainer', { opacity: 0, scale: 0.9, duration: 1 }, 20)
+    .to('#bg3', { opacity: 0, scale: 1.2, duration: 1.5 }, 21)
+    .to('#bg4', { opacity: 1, scale: 1.1, duration: 1.5 }, 22)
+    .from('#bg4', { scale: 1.4, duration: 4 }, 22);
+  
+  // ===== 25-33s: Título de nuevo =====
+  tl.to('#title', { opacity: 1, scale: 1, duration: 1 }, 25)
+    .to('#subtitle', { opacity: 1, y: 0, duration: 1 }, 25.5)
+    .to('#decoLine', { width: 250, opacity: 1, duration: 1 }, 26)
+    .to('#tagline', { opacity: 0.7, duration: 1 }, 27);
+  
+  // ===== 33-38s: Logo final =====
+  tl.to(['#title', '#subtitle'], { opacity: 0, scale: 0.8, duration: 1 }, 33)
+    .to('#bg4', { opacity: 0, scale: 1.1, duration: 1.5 }, 34)
+    .to('#bg1', { opacity: 0.3, scale: 1.05, duration: 1 }, 35)
+    .to('#logoBottom', { opacity: 1, duration: 1.5 }, 35.5)
+    .to('#countdown', { opacity: 1, duration: 1 }, 36);
+  
+  // ===== 38-45s: Fade out final =====
+  tl.to('#fadeout', { opacity: 1, duration: 2.5 }, 39)
+    .to(['#logoBottom', '#tagline', '#countdown', '.particle'], { opacity: 0, duration: 2 }, 39);
+  
+  // Mensaje final
+  tl.call(() => {
+    document.getElementById('video').innerHTML += 
+      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:14px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.8);padding:30px;border-radius:10px;">GRABA ESTA PANTALLA<br><span style="font-size:12px;color:#FF8B00;">1080x1920 • 45 segundos</span></div>';
+  });
+</script>
+
 </body>
 </html>
