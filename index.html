@@ -1,14 +1,224 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cultura-t-content-factory</title>
-    <script type="module" crossorigin src="./assets/index-C16_169B.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DMOkl3xL.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cultura T - Animaciones</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: #0A0A0A;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+    
+    .header {
+      padding: 40px 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #1B365D 0%, #0A0A0A 100%);
+    }
+    
+    .header .logo {
+      font-size: 36px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 4px;
+    }
+    
+    .header .tagline {
+      font-size: 16px;
+      color: #00B4D8;
+      margin-top: 8px;
+    }
+    
+    .header .slogan {
+      font-size: 18px;
+      color: #FF8B00;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .video-card {
+      background: linear-gradient(135deg, #1B365D 0%, #0A0A0A 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(0,180,216,0.2);
+    }
+    
+    .video-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,180,216,0.2);
+    }
+    
+    .video-card .preview {
+      width: 100%;
+      aspect-ratio: 9/16;
+      background: #0A0A0A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .video-card .preview .icon {
+      font-size: 64px;
+      opacity: 0.8;
+    }
+    
+    .video-card .preview .play {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(255,139,0,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .video-card .info {
+      padding: 20px;
+    }
+    
+    .video-card .title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+    }
+    
+    .video-card .desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 8px;
+    }
+    
+    .video-card .tag {
+      display: inline-block;
+      background: #FF8B00;
+      color: #0A0A0A;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.4);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="header">
+    <div class="logo">cultura t®</div>
+    <div class="tagline">Gestión y desarrollo</div>
+    <div class="slogan">Turismo con sentido para comunicar, liderar y transformar</div>
+  </div>
+  
+  <div class="videos-grid">
+    
+    <a href="video/sostenibilidad.html" style="text-decoration:none;">
+      <div class="video-card">
+        <div class="preview">
+          <span class="icon">💧</span>
+          <div class="play">▶</div>
+        </div>
+        <div class="info">
+          <div class="title">SOSTENIBILIDAD</div>
+          <div class="desc">El turismo que deja huella. Gota de agua en cámara lenta.</div>
+          <div class="tag">NUEVO</div>
+        </div>
+      </div>
+    </a>
+    
+    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+      <div class="preview">
+        <span class="icon">📊</span>
+        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+      </div>
+      <div class="info">
+        <div class="title">GESTIÓN</div>
+        <div class="desc">Resultados ejecutivos 2024. Próximamente.</div>
+        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+      </div>
+    </div>
+    
+    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+      <div class="preview">
+        <span class="icon">🏔️</span>
+        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+      </div>
+      <div class="info">
+        <div class="title">AVENTURA</div>
+        <div class="desc">Promoción turística. Próximamente.</div>
+        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+      </div>
+    </div>
+    
+    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+      <div class="preview">
+        <span class="icon">🎭</span>
+        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+      </div>
+      <div class="info">
+        <div class="title">CULTURA</div>
+        <div class="desc">Patrimonio y eventos. Próximamente.</div>
+        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+      </div>
+    </div>
+    
+    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+      <div class="preview">
+        <span class="icon">💰</span>
+        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+      </div>
+      <div class="info">
+        <div class="title">ECONOMÍA NARANJA</div>
+        <div class="desc">Inversión y empleos. Próximamente.</div>
+        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+      </div>
+    </div>
+    
+    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+      <div class="preview">
+        <span class="icon">🌐</span>
+        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+      </div>
+      <div class="info">
+        <div class="title">CONECTIVIDAD</div>
+        <div class="desc">Digitalización. Próximamente.</div>
+        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="footer">
+    © 2026 Cultura T - Gestión y desarrollo turístico
+  </div>
+  
+</body>
 </html>
