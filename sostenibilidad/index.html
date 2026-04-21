@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cultura T - Sostenibilidad 45s</title>
+  <title>Cultura T - Sostenibilidad</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      background: #111;
+      background: #0a0a0a;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -27,7 +27,6 @@
       max-height: 800px;
       background: #000;
       overflow: hidden;
-      box-shadow: 0 0 80px rgba(134, 59, 255, 0.4);
     }
     
     /* ===== CAPAS DE IMAGEN (Ken Burns) ===== */
@@ -40,30 +39,29 @@
       background-size: cover;
       background-position: center;
       opacity: 0;
-      filter: brightness(0.4) saturate(1.2);
     }
     
-    /* Imagen 1: Agua/Naturaleza */
+    /* Imagen 1: Colombia - Sierra Nevada montañas */
     .bg-1 {
-      background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80');
+      background-image: url('https://images.unsplash.com/photo-1587595431973-1606680f1c6b?w=1200&q=80');
     }
     
-    /* Imagen 2: Montañas/Turismo */
+    /* Imagen 2: Agua/Cascadas naturaleza */
     .bg-2 {
-      background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80');
+      background-image: url('https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80');
     }
     
-    /* Imagen 3: Bosque/Verde */
+    /* Imagen 3: Flora tropical/Vida salvaje */
     .bg-3 {
-      background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80');
+      background-image: url('https://images.unsplash.com/photo-1518531933037-91b0f9783d46?w=1200&q=80');
     }
     
-    /* Imagen 4: Atardecer/Naranja */
+    /* Imagen 4: Atardecer tropical */
     .bg-4 {
-      background-image: url('https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200&q=80');
+      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80');
     }
     
-    /* Overlay oscuro para texto */
+    /* Overlay oscuro */
     .overlay {
       position: absolute;
       top: 0;
@@ -71,60 +69,17 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(180deg, 
-        rgba(0,0,0,0.7) 0%, 
-        rgba(0,0,0,0.3) 30%,
-        rgba(0,0,0,0.3) 70%,
-        rgba(0,0,0,0.8) 100%);
+        rgba(0,0,0,0.8) 0%, 
+        rgba(0,0,0,0.2) 30%,
+        rgba(0,0,0,0.2) 70%,
+        rgba(0,0,0,0.9) 100%);
       z-index: 5;
     }
     
-    /* ===== TEXTOS CINEMÁTICOS ===== */
+    /* ===== TEXTOS NARRATIVOS ===== */
     
-    .big-title {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: clamp(40px, 10vw, 64px);
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 8px;
-      text-align: center;
-      opacity: 0;
-      z-index: 10;
-      text-shadow: 0 0 60px rgba(134, 59, 255, 0.8), 0 0 120px rgba(71, 191, 255, 0.5);
-    }
-    
-    .subtitle {
-      position: absolute;
-      top: 62%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: clamp(18px, 4.5vw, 28px);
-      font-weight: 300;
-      color: #FF8B00;
-      letter-spacing: 4px;
-      text-align: center;
-      opacity: 0;
-      z-index: 10;
-    }
-    
-    .tagline {
-      position: absolute;
-      top: 8%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: clamp(12px, 2.5vw, 16px);
-      font-weight: 600;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      opacity: 0;
-      z-index: 10;
-    }
-    
-    /* Estadísticas */
-    .stat-container {
+    /* Dato grande - estatística */
+    .stat-big {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -134,26 +89,87 @@
       z-index: 10;
     }
     
-    .stat-number {
-      font-size: clamp(80px, 22vw, 140px);
+    .stat-big .number {
+      font-size: clamp(80px, 25vw, 140px);
       font-weight: 800;
       color: #47bfff;
       line-height: 1;
-      text-shadow: 0 0 80px rgba(71, 191, 255, 0.8);
+      text-shadow: 0 0 60px rgba(71, 191, 255, 0.6);
     }
     
-    .stat-label {
-      font-size: clamp(14px, 3.5vw, 24px);
+    .stat-big .label {
+      font-size: clamp(14px, 3.5vw, 22px);
       font-weight: 600;
       color: #fff;
-      letter-spacing: 6px;
+      letter-spacing: 4px;
       margin-top: 10px;
     }
     
-    /* Logo */
-    .logo-bottom {
+    .stat-big .sublabel {
+      font-size: clamp(11px, 2.5vw, 16px);
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+    
+    /* Frase narrativa */
+    .narrative {
       position: absolute;
-      bottom: 8%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      opacity: 0;
+      z-index: 10;
+      max-width: 85%;
+    }
+    
+    .narrative .quote {
+      font-size: clamp(22px, 5.5vw, 36px);
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.4;
+      letter-spacing: 1px;
+    }
+    
+    .narrative .source {
+      font-size: clamp(10px, 2vw, 14px);
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+      margin-top: 15px;
+    }
+    
+    /* Título de sección */
+    .section-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      opacity: 0;
+      z-index: 10;
+    }
+    
+    .section-title .main {
+      font-size: clamp(36px, 9vw, 60px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 6px;
+      text-shadow: 0 0 40px rgba(134, 59, 255, 0.8);
+    }
+    
+    .section-title .accent {
+      font-size: clamp(16px, 4vw, 24px);
+      font-weight: 300;
+      color: #FF8B00;
+      letter-spacing: 3px;
+      margin-top: 10px;
+    }
+    
+    /* Logo sutil */
+    .logo-subtle {
+      position: absolute;
+      bottom: 6%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -161,34 +177,41 @@
       z-index: 10;
     }
     
-    .logo-bottom .brand {
-      font-size: clamp(28px, 7vw, 44px);
+    .logo-subtle .brand {
+      font-size: clamp(20px, 5vw, 30px);
       font-weight: 800;
-      color: #fff;
-      letter-spacing: 4px;
-    }
-    
-    .logo-bottom .slogan {
-      font-size: clamp(11px, 2.5vw, 15px);
-      color: #FF8B00;
+      color: rgba(255,255,255,0.9);
       letter-spacing: 3px;
-      margin-top: 8px;
     }
     
-    /* Partículas flotantes */
-    .particle {
+    .logo-subtle .tagline {
+      font-size: clamp(9px, 2vw, 12px);
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+    
+    /* Frase inferior */
+    .bottom-quote {
       position: absolute;
-      background: rgba(134, 59, 255, 0.6);
-      border-radius: 50%;
-      z-index: 4;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: clamp(12px, 2.5vw, 16px);
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 3px;
+      opacity: 0;
+      z-index: 10;
     }
     
     /* Línea decorativa */
-    .deco-line {
+    .deco-bar {
       position: absolute;
-      height: 2px;
+      height: 3px;
       background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
       z-index: 10;
+      opacity: 0;
     }
     
     /* Fade final */
@@ -203,17 +226,15 @@
       z-index: 15;
     }
     
-    /* Countdown */
+    /* Countdown sutil */
     .countdown {
       position: absolute;
-      bottom: 18%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: clamp(12px, 2.5vw, 16px);
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 3px;
+      top: 5%;
+      right: 5%;
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 2px;
       z-index: 12;
-      opacity: 0;
     }
   </style>
 </head>
@@ -221,7 +242,7 @@
 
 <div class="phone-frame" id="video">
 
-  <!-- Fondos con Ken Burns -->
+  <!-- Fondos cinematográficos -->
   <div class="bg-image bg-1" id="bg1"></div>
   <div class="bg-image bg-2" id="bg2"></div>
   <div class="bg-image bg-3" id="bg3"></div>
@@ -230,104 +251,124 @@
   <!-- Overlay -->
   <div class="overlay"></div>
   
-  <!-- Partículas -->
-  <div id="particles"></div>
+  <!-- Contenido narrativo -->
   
-  <!-- Contenido -->
-  <div class="tagline" id="tagline">FONTUR • CULTURA T</div>
-  
-  <div class="big-title" id="title">SOSTENIBILIDAD</div>
-  
-  <div class="deco-line" id="decoLine" style="top: 22%; width: 0;"></div>
-  
-  <div class="subtitle" id="subtitle">El turismo que deja huella</div>
-  
-  <div class="stat-container" id="statContainer">
-    <div class="stat-number" id="statNumber">0</div>
-    <div class="stat-label">GESTIÓN EFICIENTE</div>
+  <!-- ESCENA 1: El Dato - 6.7 millones -->
+  <div class="stat-big" id="stat1">
+    <div class="number">6.7M</div>
+    <div class="label">TURISTAS EN COLOMBIA</div>
+    <div class="sublabel">2024 — Récord histórico</div>
   </div>
   
-  <div class="logo-bottom" id="logoBottom">
+  <!-- ESCENA 2: La Pregunta -->
+  <div class="narrative" id="scene2">
+    <div class="quote">¿Cómo proteger lo que nos visita?</div>
+    <div class="source">El turismo que deja huella</div>
+  </div>
+  
+  <!-- ESCENA 3: Dato biodiversidad -->
+  <div class="stat-big" id="stat2">
+    <div class="number">#1</div>
+    <div class="label">BIODIVERSIDAD MUNDIAL</div>
+    <div class="sublabel">1.937 especies de aves • 10% del planeta</div>
+  </div>
+  
+  <!-- ESCENA 4: Sierra Nevada -->
+  <div class="narrative" id="scene4">
+    <div class="quote">La Sierra Nevada de Santa Marta:<br>la más irremplazable del mundo</div>
+    <div class="source">UICN — Unión Internacional para la Conservación</div>
+  </div>
+  
+  <!-- ESCENA 5: El Dato clave -->
+  <div class="stat-big" id="stat3">
+    <div class="number">61%</div>
+    <div class="label">PAGARÍAN MÁS</div>
+    <div class="sublabel">por experiencias turísticas sostenibles</div>
+  </div>
+  
+  <!-- ESCENA 6: El llamado -->
+  <div class="section-title" id="scene6">
+    <div class="main">SOSTENIBILIDAD</div>
+    <div class="accent">No es opción. Es supervivencia.</div>
+  </div>
+  
+  <!-- Línea decorativa -->
+  <div class="deco-bar" id="decoBar"></div>
+  
+  <!-- Logo sutil -->
+  <div class="logo-subtle" id="logo">
     <div class="brand">cultura t®</div>
-    <div class="slogan">Turismo con sentido</div>
+    <div class="tagline">Gestión y desarrollo</div>
   </div>
   
+  <!-- Frase inferior -->
+  <div class="bottom-quote" id="bottomQuote">Turismo con sentido</div>
+  
+  <!-- Countdown -->
   <div class="countdown" id="countdown">45s</div>
   
+  <!-- Fade -->
   <div class="fadeout" id="fadeout"></div>
   
 </div>
 
 <script>
-  // Crear partículas
-  const pc = document.getElementById('particles');
-  for (let i = 0; i < 25; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.top = Math.random() * 100 + '%';
-    p.style.width = (2 + Math.random() * 4) + 'px';
-    p.style.height = p.style.width;
-    pc.appendChild(p);
-  }
-  
-  // Timeline GSAP - 45 segundos
+  // Timeline GSAP - 45 segundos con STORYtelling
   const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
   
-  // ===== 0-3s: Entrada dramática =====
-  tl.to('#bg1', { opacity: 1, scale: 1.1, duration: 3 }, 0)
-    .from('#bg1', { scale: 1.3, duration: 4 }, 0)
-    .to('#tagline', { opacity: 1, duration: 1 }, 0.5)
-    .to('#title', { opacity: 1, scale: 1, duration: 1.5 }, 1)
-    .to('#decoLine', { width: 200, opacity: 1, duration: 1 }, 1.5);
+  // ===== 0-5s: Entrada - El Dato Grande =====
+  tl.to('#bg1', { opacity: 1, duration: 2 }, 0)
+    .from('#bg1', { scale: 1.3, duration: 5 }, 0)
+    .to('#stat1', { opacity: 1, duration: 1.5 }, 1)
+    .to('#stat1', { opacity: 0, duration: 1 }, 4.5);
   
-  // ===== 3-8s: Transición imagen 2 =====
-  tl.to('#bg1', { opacity: 0, scale: 1.2, duration: 2 }, 4)
-    .to('#bg2', { opacity: 1, scale: 1.15, duration: 2 }, 5)
-    .from('#bg2', { scale: 1.4, duration: 4 }, 5)
-    .to('#subtitle', { opacity: 1, duration: 1 }, 5.5);
+  // ===== 5-10s: Transición a imagen 2 =====
+  tl.to('#bg1', { opacity: 0, scale: 1.1, duration: 1.5 }, 5.5)
+    .to('#bg2', { opacity: 1, duration: 1.5 }, 6.5)
+    .from('#bg2', { scale: 1.4, duration: 5 }, 6.5);
   
-  // ===== 8-13s: Transición imagen 3 =====
-  tl.to('#subtitle', { opacity: 0, y: -20, duration: 0.8 }, 8)
-    .to('#title', { opacity: 0, scale: 0.8, duration: 1 }, 8)
-    .to('#bg2', { opacity: 0, scale: 1.1, duration: 1.5 }, 10)
-    .to('#bg3', { opacity: 1, scale: 1.1, duration: 1.5 }, 11)
-    .from('#bg3', { scale: 1.3, duration: 4 }, 11);
+  // ===== 10-15s: La Pregunta =====
+  tl.to('#scene2', { opacity: 1, duration: 1.2 }, 10)
+    .to('#scene2', { opacity: 0, duration: 1 }, 14);
   
-  // ===== 13-20s: Estadísticas =====
-  tl.to('#statContainer', { opacity: 1, duration: 1 }, 13)
-    .to('#statNumber', { innerText: 73, duration: 2, snap: { innerText: 1 } }, 14)
-    // Partículas se aceleran
-    .to('.particle', { opacity: 0.8, scale: 1.5, duration: 0.5, stagger: 0.05 }, 15)
-    .to('.particle', { opacity: 0.3, scale: 1, duration: 3, stagger: 0.03 }, 16);
+  // ===== 15-20s: Transición a imagen 3 =====
+  tl.to('#bg2', { opacity: 0, scale: 1.1, duration: 1.5 }, 15)
+    .to('#bg3', { opacity: 1, duration: 1.5 }, 16.5)
+    .from('#bg3', { scale: 1.4, duration: 5 }, 16.5);
   
-  // ===== 20-25s: Transición imagen 4 (atardecer) =====
-  tl.to('#statContainer', { opacity: 0, scale: 0.9, duration: 1 }, 20)
-    .to('#bg3', { opacity: 0, scale: 1.2, duration: 1.5 }, 21)
-    .to('#bg4', { opacity: 1, scale: 1.1, duration: 1.5 }, 22)
-    .from('#bg4', { scale: 1.4, duration: 4 }, 22);
+  // ===== 20-25s: Biodiversidad =====
+  tl.to('#stat2', { opacity: 1, duration: 1.2 }, 20.5)
+    .to('#stat2', { opacity: 0, duration: 1 }, 24.5);
   
-  // ===== 25-33s: Título de nuevo =====
-  tl.to('#title', { opacity: 1, scale: 1, duration: 1 }, 25)
-    .to('#subtitle', { opacity: 1, y: 0, duration: 1 }, 25.5)
-    .to('#decoLine', { width: 250, opacity: 1, duration: 1 }, 26)
-    .to('#tagline', { opacity: 0.7, duration: 1 }, 27);
+  // ===== 25-30s: Transición a imagen 4 =====
+  tl.to('#bg3', { opacity: 0, scale: 1.1, duration: 1.5 }, 25.5)
+    .to('#bg4', { opacity: 1, duration: 1.5 }, 27)
+    .from('#bg4', { scale: 1.4, duration: 5 }, 27);
   
-  // ===== 33-38s: Logo final =====
-  tl.to(['#title', '#subtitle'], { opacity: 0, scale: 0.8, duration: 1 }, 33)
-    .to('#bg4', { opacity: 0, scale: 1.1, duration: 1.5 }, 34)
-    .to('#bg1', { opacity: 0.3, scale: 1.05, duration: 1 }, 35)
-    .to('#logoBottom', { opacity: 1, duration: 1.5 }, 35.5)
-    .to('#countdown', { opacity: 1, duration: 1 }, 36);
+  // ===== 30-35s: Sierra Nevada =====
+  tl.to('#scene4', { opacity: 1, duration: 1.2 }, 30.5)
+    .to('#scene4', { opacity: 0, duration: 1 }, 34.5);
   
-  // ===== 38-45s: Fade out final =====
-  tl.to('#fadeout', { opacity: 1, duration: 2.5 }, 39)
-    .to(['#logoBottom', '#tagline', '#countdown', '.particle'], { opacity: 0, duration: 2 }, 39);
+  // ===== 35-38s: El 61% =====
+  tl.to('#bg4', { opacity: 0, scale: 1.1, duration: 1 }, 35.5)
+    .to('#bg2', { opacity: 0.5, duration: 1 }, 36)
+    .to('#stat3', { opacity: 1, duration: 1 }, 36.5)
+    .to('#stat3', { opacity: 0, duration: 1 }, 39.5);
+  
+  // ===== 39-43s: El Título =====
+  tl.to('#decoBar', { width: 200, opacity: 1, duration: 1 }, 39.5)
+    .to('#scene6', { opacity: 1, duration: 1.5 }, 40)
+    .to('#logo', { opacity: 1, duration: 1 }, 41)
+    .to('#bottomQuote', { opacity: 1, duration: 1 }, 41.5);
+  
+  // ===== 43-45s: Fade out =====
+  tl.to('#fadeout', { opacity: 1, duration: 1.5 }, 43)
+    .to(['#scene6', '#logo', '#bottomQuote', '#decoBar'], { opacity: 0, duration: 1 }, 43);
   
   // Mensaje final
   tl.call(() => {
     document.getElementById('video').innerHTML += 
-      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:14px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.8);padding:30px;border-radius:10px;">GRABA ESTA PANTALLA<br><span style="font-size:12px;color:#FF8B00;">1080x1920 • 45 segundos</span></div>';
+      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:13px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.85);padding:25px;border-radius:8px;">GRABA ESTA PANTALLA<br><span style="font-size:11px;color:#FF8B00;">1080x1920 • 45 segundos • Contenido de valor</span></div>';
   });
 </script>
 
