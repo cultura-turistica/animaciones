@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cultura T - Sostenibilidad</title>
+  <title>Sostenibilidad - Cultura T</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
   <style>
@@ -25,41 +25,97 @@
       height: 100vh;
       max-width: 450px;
       max-height: 800px;
-      background: #000;
+      background: #0a0a0a;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
-    /* ===== FONDOS ===== */
-    .bg-image {
-      position: absolute;
-      top: -5%; left: -5%;
-      width: 110%; height: 110%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      will-change: opacity, transform;
-    }
-    
-    /* Pexels fotos verificadas HTTP 200 */
-    .bg-1 { background-image: url('https://images.pexels.com/photos/235734/pexels-photo-235734.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
-    .bg-2 { background-image: url('https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
-    .bg-3 { background-image: url('https://images.pexels.com/photos/1695181/pexels-photo-1695181.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
-    .bg-4 { background-image: url('https://images.pexels.com/photos/3822628/pexels-photo-3822628.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
-    
-    .overlay {
+    /* ===== ILUSTRACIONES SVG ===== */
+    .svg-layer {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(180deg, 
-        rgba(0,0,0,0.88) 0%, 
-        rgba(0,0,0,0.1) 25%,
-        rgba(0,0,0,0.1) 75%,
-        rgba(0,0,0,0.92) 100%);
-      z-index: 5;
+      pointer-events: none;
+      z-index: 2;
     }
     
-    /* ===== CONTENEDOR PRINCIPAL - CENTRA TODO ===== */
-    .main-container {
+    /* ===== AGUA / DROP ===== */
+    .drop-container {
+      position: absolute;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    
+    .drop {
+      width: 60px;
+      height: 80px;
+    }
+    
+    /* ===== RIPPLE ===== */
+    .ripple-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      opacity: 0;
+    }
+    
+    .ripple-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 2px solid rgba(71, 191, 255, 0.6);
+    }
+    
+    .ripple-ring:nth-child(1) { width: 80px; height: 80px; }
+    .ripple-ring:nth-child(2) { width: 160px; height: 160px; }
+    .ripple-ring:nth-child(3) { width: 260px; height: 260px; }
+    
+    /* ===== HOJA / LEAF ===== */
+    .leaf-container {
+      position: absolute;
+      bottom: 12%;
+      right: 12%;
+      opacity: 0;
+    }
+    
+    .leaf {
+      width: 80px;
+      height: 80px;
+    }
+    
+    /* ===== GLOBO / EARTH ===== */
+    .earth-container {
+      position: absolute;
+      top: 15%;
+      right: 10%;
+      opacity: 0;
+    }
+    
+    .earth {
+      width: 60px;
+      height: 60px;
+    }
+    
+    /* ===== LUZ / PARTÍCULAS ===== */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(71, 191, 255, 0.7);
+      opacity: 0;
+    }
+    
+    /* ===== CONTENIDO DE TEXTO ===== */
+    .content-layer {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -68,88 +124,84 @@
       align-items: center;
       justify-content: center;
       z-index: 10;
-      padding: 15px 20px;
+      padding: 20px;
     }
     
-    /* ===== ESTADÍSTICA GRANDE ===== */
-    .stat-block {
+    /* NÚMERO GRANDE */
+    .stat-scene {
       text-align: center;
-      width: 100%;
       opacity: 0;
+      max-width: 90%;
     }
     
-    .stat-block .number {
-      font-size: clamp(65px, 26vw, 120px);
+    .stat-scene .big-num {
+      font-size: clamp(70px, 30vw, 130px);
       font-weight: 800;
       color: #47bfff;
       line-height: 1;
-      letter-spacing: -2px;
+      letter-spacing: -3px;
     }
     
-    .stat-block .label {
-      font-size: clamp(10px, 3.2vw, 18px);
+    .stat-scene .big-label {
+      font-size: clamp(11px, 3.5vw, 20px);
       font-weight: 600;
       color: #fff;
       letter-spacing: 3px;
-      margin-top: 8px;
+      margin-top: 10px;
       text-transform: uppercase;
-      max-width: 100%;
     }
     
-    .stat-block .sublabel {
+    .stat-scene .big-sub {
       font-size: clamp(8px, 2vw, 13px);
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 1px;
-      margin-top: 5px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      margin-top: 6px;
     }
     
-    /* ===== NARRATIVA / FRASE ===== */
-    .narrative-block {
+    /* FRASE */
+    .phrase-scene {
       text-align: center;
-      width: 100%;
       opacity: 0;
+      max-width: 85%;
     }
     
-    .narrative-block .quote {
-      font-size: clamp(19px, 5vw, 32px);
+    .phrase-scene .phrase {
+      font-size: clamp(22px, 6vw, 38px);
       font-weight: 600;
       color: #fff;
       line-height: 1.4;
     }
     
-    .narrative-block .attr {
-      font-size: clamp(8px, 1.8vw, 12px);
-      color: rgba(255,255,255,0.4);
+    .phrase-scene .attr {
+      font-size: clamp(8px, 2vw, 12px);
+      color: rgba(255,255,255,0.35);
       letter-spacing: 2px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     
-    /* ===== TÍTULO PRINCIPAL - DOS LÍNEAS ===== */
-    .title-block {
+    /* TÍTULO */
+    .title-scene {
       text-align: center;
-      width: 100%;
       opacity: 0;
     }
     
-    .title-block .line1 {
-      font-size: clamp(28px, 8.5vw, 54px);
+    .title-scene .title-line1 {
+      font-size: clamp(30px, 9vw, 56px);
       font-weight: 800;
       color: #fff;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       line-height: 1.1;
-      text-shadow: 0 0 40px rgba(134, 59, 255, 0.7);
     }
     
-    .title-block .line2 {
-      font-size: clamp(28px, 8.5vw, 54px);
+    .title-scene .title-line2 {
+      font-size: clamp(30px, 9vw, 56px);
       font-weight: 800;
       color: #fff;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       line-height: 1.1;
-      text-shadow: 0 0 40px rgba(134, 59, 255, 0.7);
     }
     
-    .title-block .accent {
+    .title-scene .accent {
       font-size: clamp(13px, 3.5vw, 20px);
       font-weight: 300;
       color: #FF8B00;
@@ -157,19 +209,19 @@
       margin-top: 10px;
     }
     
-    /* ===== LÍNEA DECORATIVA ===== */
-    .deco-bar {
+    /* BARRA DECORATIVA */
+    .deco-line {
       width: 0;
       height: 2px;
       background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
+      margin: 12px auto;
       opacity: 0;
-      margin: 10px auto;
     }
     
-    /* ===== LOGO ===== */
-    .logo-block {
+    /* LOGO */
+    .logo-final {
       position: absolute;
-      bottom: 4%;
+      bottom: 5%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -177,21 +229,21 @@
       white-space: nowrap;
     }
     
-    .logo-block .brand {
-      font-size: clamp(16px, 4.5vw, 26px);
+    .logo-final .brand {
+      font-size: clamp(15px, 4.5vw, 24px);
       font-weight: 800;
-      color: rgba(255,255,255,0.88);
+      color: rgba(255,255,255,0.85);
       letter-spacing: 2px;
     }
     
-    .logo-block .slogan {
+    .logo-final .slogan {
       font-size: clamp(8px, 1.8vw, 11px);
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.3);
       letter-spacing: 2px;
       margin-top: 3px;
     }
     
-    /* ===== COUNTDOWN ===== */
+    /* COUNTDOWN */
     .countdown {
       position: absolute;
       top: 3%;
@@ -201,14 +253,52 @@
       letter-spacing: 2px;
     }
     
-    /* ===== FADE ===== */
+    /* GRAB NOTE */
+    .grab-note {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 2px;
+      opacity: 0;
+    }
+    
+    /* FADE */
     .fadeout {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: #000;
       opacity: 0;
-      z-index: 15;
+      z-index: 20;
+    }
+    
+    /* ===== ESCENA 6: ILUSTRACIÓN AGUA ===== */
+    .water-scene {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      opacity: 0;
+    }
+    
+    .water-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #47bfff;
+      opacity: 0.6;
+      margin: 0 auto 15px;
+    }
+    
+    .water-scene .phrase {
+      font-size: clamp(18px, 5vw, 30px);
+      font-weight: 600;
+      color: #47bfff;
+      letter-spacing: 1px;
     }
   </style>
 </head>
@@ -216,150 +306,215 @@
 
 <div class="phone-frame" id="video">
 
-  <!-- Fondos -->
-  <div class="bg-image bg-1" id="bg1"></div>
-  <div class="bg-image bg-2" id="bg2"></div>
-  <div class="bg-image bg-3" id="bg3"></div>
-  <div class="bg-image bg-4" id="bg4"></div>
-  <div class="overlay"></div>
+  <!-- CAPA SVG -->
+  <div class="svg-layer">
+    
+    <!-- DROP AGUA -->
+    <div class="drop-container" id="dropCont">
+      <svg class="drop" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 0C30 0 5 35 5 52C5 65.3 16.7 77 30 77C43.3 77 55 65.3 55 52C55 35 30 0 30 0Z" 
+              fill="url(#dropGrad)" opacity="0.9"/>
+        <ellipse cx="22" cy="45" rx="6" ry="10" fill="rgba(255,255,255,0.3)"/>
+        <defs>
+          <linearGradient id="dropGrad" x1="30" y1="0" x2="30" y2="77" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#47bfff"/>
+            <stop offset="100%" stop-color="#0077b6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    
+    <!-- RIPPLES -->
+    <div class="ripple-container" id="ripples">
+      <div class="ripple-ring" id="r1"></div>
+      <div class="ripple-ring" id="r2"></div>
+      <div class="ripple-ring" id="r3"></div>
+    </div>
+    
+    <!-- HOJA -->
+    <div class="leaf-container" id="leafCont">
+      <svg class="leaf" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 5C40 5 10 25 10 50C10 65 25 75 40 75C55 75 70 65 70 50C70 25 40 5 40 5Z" 
+              fill="#2d9b4e" opacity="0.85"/>
+        <path d="M40 20V70M40 20C40 20 25 35 20 50M40 20C40 20 55 35 60 50" 
+              stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+        <path d="M40 5C40 5 65 30 65 50" stroke="#1a7a32" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+    
+    <!-- GLOBO TIERRA -->
+    <div class="earth-container" id="earthCont">
+      <svg class="earth" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="28" fill="#1B365D" opacity="0.8"/>
+        <ellipse cx="30" cy="30" rx="28" ry="12" fill="none" stroke="#47bfff" stroke-width="1" opacity="0.6"/>
+        <path d="M15 20C20 18 30 17 45 20" stroke="#47bfff" stroke-width="1" opacity="0.5"/>
+        <path d="M10 30C18 32 42 31 50 30" stroke="#47bfff" stroke-width="1" opacity="0.5"/>
+        <path d="M15 40C22 42 38 41 48 38" stroke="#47bfff" stroke-width="1" opacity="0.5"/>
+        <circle cx="22" cy="24" r="4" fill="#2d9b4e" opacity="0.7"/>
+        <circle cx="38" cy="32" r="5" fill="#2d9b4e" opacity="0.7"/>
+        <circle cx="26" cy="38" r="3" fill="#2d9b4e" opacity="0.7"/>
+      </svg>
+    </div>
+    
+    <!-- PARTÍCULAS -->
+    <div id="particles"></div>
+  </div>
   
-  <!-- ESCENA 1: Dato 80% -->
-  <div class="main-container" id="s1">
-    <div class="stat-block" id="stat1">
-      <div class="number">80%</div>
-      <div class="label">prefieren turismo sostenible</div>
-      <div class="sublabel">a nivel global</div>
+  <!-- CAPA DE CONTENIDO -->
+  
+  <!-- ESCENA 1: 80% -->
+  <div class="content-layer" id="sc1">
+    <div class="stat-scene">
+      <div class="big-num">80%</div>
+      <div class="big-label">prefieren turismo responsable</div>
+      <div class="big-sub">a nivel global</div>
     </div>
   </div>
   
   <!-- ESCENA 2: Pregunta -->
-  <div class="main-container" id="s2">
-    <div class="narrative-block" id="narr1">
-      <div class="quote">¿Por qué importa<br>el turismo sostenible?</div>
+  <div class="content-layer" id="sc2">
+    <div class="phrase-scene">
+      <div class="phrase">¿Por qué importa<br>el turismo sostenible?</div>
     </div>
   </div>
   
-  <!-- ESCENA 3: Dato 13% -->
-  <div class="main-container" id="s3">
-    <div class="stat-block" id="stat2">
-      <div class="number">13%</div>
-      <div class="label">crece el mercado anual</div>
-      <div class="sublabel">turismo responsable</div>
+  <!-- ESCENA 3: 13% -->
+  <div class="content-layer" id="sc3">
+    <div class="stat-scene">
+      <div class="big-num">13%</div>
+      <div class="big-label">crece el mercado anual</div>
+      <div class="big-sub">turismo responsable</div>
     </div>
   </div>
   
-  <!-- ESCENA 4: Dato 1 de 4 -->
-  <div class="main-container" id="s4">
-    <div class="stat-block" id="stat3">
-      <div class="number">1/4</div>
-      <div class="label">viajes ya son ecoturismo</div>
-      <div class="sublabel">a nivel mundial</div>
+  <!-- ESCENA 4: Ilustración agua -->
+  <div class="content-layer" id="sc4">
+    <div class="water-scene">
+      <div class="water-circle" id="waterCircle"></div>
+      <div class="phrase">El agua es vida</div>
     </div>
   </div>
   
-  <!-- ESCENA 5: Pregunta 2 -->
-  <div class="main-container" id="s5">
-    <div class="narrative-block" id="narr2">
-      <div class="quote">Cada viaje es una<br>decisión. ¿La tuya cuál es?</div>
+  <!-- ESCENA 5: 1/4 -->
+  <div class="content-layer" id="sc5">
+    <div class="stat-scene">
+      <div class="big-num">1 de 4</div>
+      <div class="big-label">viajes son ecoturismo</div>
+      <div class="big-sub">a nivel mundial</div>
     </div>
   </div>
   
-  <!-- ESCENA 6: Título final en 2 líneas -->
-  <div class="main-container" id="s6">
-    <div class="title-block" id="titleBlock">
-      <div class="line1">SOSTENI-</div>
-      <div class="line2">BILIDAD</div>
+  <!-- ESCENA 6: Título final -->
+  <div class="content-layer" id="sc6">
+    <div class="title-scene">
+      <div class="title-line1">SOSTENI-</div>
+      <div class="title-line2">BILIDAD</div>
       <div class="accent">No es opción. Es supervivencia.</div>
+      <div class="deco-line" id="decoLine"></div>
     </div>
-    <div class="deco-bar" id="decoBar"></div>
   </div>
   
   <!-- Logo -->
-  <div class="logo-block" id="logo">
+  <div class="logo-final" id="logo">
     <div class="brand">cultura t®</div>
     <div class="slogan">Gestión y desarrollo</div>
   </div>
   
   <div class="countdown">45s</div>
-  
+  <div class="grab-note" id="grabNote">GRABA 1080×1920</div>
   <div class="fadeout" id="fadeout"></div>
   
 </div>
 
 <script>
-  // Ocultar escenas inicialmente
-  ['s1','s2','s3','s4','s5','s6'].forEach(id => {
+  // Crear partículas
+  const pContainer = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.width = (2 + Math.random() * 4) + 'px';
+    p.style.height = p.style.width;
+    p.id = 'p' + i;
+    pContainer.appendChild(p);
+  }
+  
+  // Ocultar todas las escenas
+  ['sc1','sc2','sc3','sc4','sc5','sc6'].forEach(id => {
     document.getElementById(id).style.opacity = '0';
     document.getElementById(id).style.visibility = 'hidden';
   });
-  document.getElementById('s1').style.visibility = 'visible';
   
-  // Timeline GSAP - 45 segundos
+  // Timeline - 45s
   const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
   
-  // 0-5s: 80%
-  tl.set('#s1', { visibility: 'visible' })
-    .to('#bg1', { opacity: 1, duration: 1.5 }, 0)
-    .from('#bg1', { scale: 1.25, duration: 6 }, 0)
-    .to('#stat1', { opacity: 1, duration: 1.2 }, 0.8)
-    .to('#s1', { opacity: 0, duration: 0.8 }, 4.5)
-    .set('#s1', { visibility: 'hidden' });
+  // 0-5s: Partículas + 80%
+  tl.to('#sc1', { visibility: 'visible', opacity: 1, duration: 0.5 }, 0.5)
+    .from('#sc1', { y: 30, duration: 1 }, 0.5)
+    .to('#sc1', { opacity: 0, duration: 0.8 }, 4.5)
+    .to('#sc1', { visibility: 'hidden', duration: 0.01 }, 5.2);
   
-  // 5-9s: Transición + Pregunta 1
-  tl.to('#bg1', { opacity: 0, scale: 1.1, duration: 1 }, 5.2)
-    .to('#bg2', { opacity: 1, duration: 1 }, 6)
-    .from('#bg2', { scale: 1.3, duration: 6 }, 6)
-    .set('#s2', { visibility: 'visible' })
-    .to('#s2', { opacity: 1, duration: 1 }, 6.5)
-    .to('#s2', { opacity: 0, duration: 0.8 }, 8.5)
-    .set('#s2', { visibility: 'hidden' });
+  // Partículas flotando toda la primera sección
+  for (let i = 0; i < 30; i++) {
+    tl.to('#p' + i, { 
+      opacity: Math.random() * 0.8 + 0.2, 
+      y: -30 + Math.random() * 60,
+      x: -20 + Math.random() * 40,
+      duration: 1.5 + Math.random(),
+      repeat: 3
+    }, 0);
+  }
   
-  // 9-13s: Transición + 13%
-  tl.to('#bg2', { opacity: 0, scale: 1.1, duration: 1 }, 9.2)
-    .to('#bg3', { opacity: 1, duration: 1 }, 9.8)
-    .from('#bg3', { scale: 1.3, duration: 6 }, 9.8)
-    .set('#s3', { visibility: 'visible' })
-    .to('#stat2', { opacity: 1, duration: 1 }, 10.5)
-    .to('#s3', { opacity: 0, duration: 0.8 }, 13)
-    .set('#s3', { visibility: 'hidden' });
+  // 5-9s: Pregunta
+  tl.to('#sc2', { visibility: 'visible', opacity: 1, duration: 0.8 }, 5.5)
+    .from('#sc2', { y: 20, duration: 0.8 }, 5.5)
+    .to('#sc2', { opacity: 0, duration: 0.6 }, 8.5)
+    .to('#sc2', { visibility: 'hidden', duration: 0.01 }, 9.2);
   
-  // 13-17s: Transición + 1/4
-  tl.to('#bg3', { opacity: 0, scale: 1.1, duration: 1 }, 13.2)
-    .to('#bg4', { opacity: 1, duration: 1 }, 13.8)
-    .from('#bg4', { scale: 1.3, duration: 6 }, 13.8)
-    .set('#s4', { visibility: 'visible' })
-    .to('#stat3', { opacity: 1, duration: 1 }, 14.5)
-    .to('#s4', { opacity: 0, duration: 0.8 }, 17)
-    .set('#s4', { visibility: 'hidden' });
+  // 9-13s: 13%
+  tl.to('#sc3', { visibility: 'visible', opacity: 1, duration: 0.5 }, 9.5)
+    .from('#sc3', { y: 30, duration: 1 }, 9.5)
+    .to('#sc3', { opacity: 0, duration: 0.8 }, 13)
+    .to('#sc3', { visibility: 'hidden', duration: 0.01 }, 13.5);
   
-  // 17-21s: Transición + Pregunta 2
-  tl.to('#bg4', { opacity: 0, scale: 1.1, duration: 1 }, 17.2)
-    .to('#bg1', { opacity: 1, duration: 1 }, 17.8)
-    .from('#bg1', { scale: 1.3, duration: 6 }, 17.8)
-    .set('#s5', { visibility: 'visible' })
-    .to('#s5', { opacity: 1, duration: 1 }, 18.5)
-    .to('#s5', { opacity: 0, duration: 0.8 }, 21)
-    .set('#s5', { visibility: 'hidden' });
+  // 13-17s: Agua + frase
+  tl.to('#sc4', { visibility: 'visible', opacity: 1, duration: 0.8 }, 13.8)
+    .to('#waterCircle', { scale: 1.3, opacity: 0.4, duration: 2, repeat: 1, yoyo: true }, 13.8)
+    .from('#waterCircle', { scale: 0.8, duration: 0.5 }, 13.8)
+    .to('#sc4', { opacity: 0, duration: 0.6 }, 17)
+    .to('#sc4', { visibility: 'hidden', duration: 0.01 }, 17.5);
   
-  // 21-28s: Título FINAL
-  tl.to('#bg1', { opacity: 0.3, duration: 1 }, 21.5)
-    .set('#s6', { visibility: 'visible' })
-    .to('#s6', { opacity: 1, duration: 1.2 }, 22)
-    .to('#decoBar', { width: 160, opacity: 1, duration: 1 }, 23)
-    .to('#logo', { opacity: 1, duration: 1 }, 24);
+  // 17-21s: 1/4
+  tl.to('#sc5', { visibility: 'visible', opacity: 1, duration: 0.5 }, 17.8)
+    .from('#sc5', { y: 30, duration: 1 }, 17.8)
+    .to('#sc5', { opacity: 0, duration: 0.8 }, 21)
+    .to('#sc5', { visibility: 'hidden', duration: 0.01 }, 21.5);
   
-  // 28-32s: Logo visible
-  tl.to('#s6', { opacity: 0, duration: 1 }, 28)
-    .set('#s6', { visibility: 'hidden' });
+  // 21-28s: Título final + ilustraciones
+  tl.to('#dropCont', { opacity: 0.6, duration: 1 }, 22)
+    .to('#leafCont', { opacity: 0.8, duration: 1 }, 22.5)
+    .to('#earthCont', { opacity: 0.7, duration: 1 }, 23)
+    .to('#sc6', { visibility: 'visible', opacity: 1, duration: 1 }, 22)
+    .from('#sc6', { y: 20, duration: 1 }, 22)
+    .to('#decoLine', { width: 160, opacity: 1, duration: 1 }, 23.5)
+    .to('#logo', { opacity: 1, duration: 1 }, 24)
+    .to('#grabNote', { opacity: 1, duration: 1 }, 24.5);
   
-  // 32-39s: Fade final
-  tl.to('#logo', { opacity: 0, duration: 1 }, 33)
+  // 28-35s: Todo visible con logo
+  tl.to('#sc6', { opacity: 0, duration: 1 }, 30)
+    .to('#sc6', { visibility: 'hidden', duration: 0.01 }, 30.8)
+    .to(['#dropCont','#leafCont','#earthCont'], { opacity: 0, duration: 1 }, 32);
+  
+  // 35-40s: Fade out
+  tl.to('#logo', { opacity: 0, duration: 1 }, 35)
+    .to('#grabNote', { opacity: 0, duration: 1 }, 35)
     .to('#fadeout', { opacity: 1, duration: 2 }, 38);
   
   // Mensaje final
   tl.call(() => {
     document.getElementById('video').innerHTML += 
-      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:11px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.92);padding:18px;border-radius:8px;">GRABA ESTA PANTALLA<br><span style="font-size:10px;color:#FF8B00;">1080×1920 • 45 segundos</span></div>';
+      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:11px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.95);padding:18px;border-radius:8px;">GRABA ESTA PANTALLA<br><span style="font-size:10px;color:#FF8B00;">1080×1920 • 45 segundos</span></div>';
   });
 </script>
 
