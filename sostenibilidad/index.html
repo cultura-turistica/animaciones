@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Cultura T - Sostenibilidad</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.3.2/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,15 +27,91 @@
       overflow: hidden;
     }
     
-    /* Logo pájaro FONTUR */
+    /* ===== ANIMACIONES CSS ===== */
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    
+    @keyframes scaleIn {
+      from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    
+    @keyframes dropFall {
+      0% { transform: translateX(-50%) translateY(-200px); opacity: 0; }
+      10% { opacity: 1; }
+      35% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      40% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0; }
+      100% { transform: translateX(-50%) translateY(0); opacity: 0; }
+    }
+    
+    @keyframes ripple1 {
+      0% { width: 50px; height: 50px; opacity: 0; }
+      20% { opacity: 0.7; }
+      100% { width: 400px; height: 400px; opacity: 0; }
+    }
+    
+    @keyframes ripple2 {
+      0% { width: 50px; height: 50px; opacity: 0; }
+      20% { opacity: 0.5; }
+      100% { width: 600px; height: 600px; opacity: 0; }
+    }
+    
+    @keyframes ripple3 {
+      0% { width: 50px; height: 50px; opacity: 0; }
+      20% { opacity: 0.3; }
+      100% { width: 800px; height: 800px; opacity: 0; }
+    }
+    
+    @keyframes floatUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes textGlow {
+      0%, 100% { text-shadow: 0 0 40px #863bff; }
+      50% { text-shadow: 0 0 80px #863bff, 0 0 120px #47bfff; }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+    
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* ===== ELEMENTOS ===== */
+    
+    /* Fondo con gradiente sutil */
+    .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, #1B365D 0%, #0A0A0A 70%);
+    }
+    
+    /* Logo FONTUR pájaro */
     .logo-fontur {
       position: absolute;
-      top: 50%;
+      top: 30%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       opacity: 0;
+      z-index: 10;
     }
     
     .logo-fontur svg {
@@ -44,7 +120,7 @@
       filter: drop-shadow(0 0 30px #863bff);
     }
     
-    /* Título Sostenibilidad */
+    /* Título */
     .titulo {
       position: absolute;
       top: 15%;
@@ -54,8 +130,8 @@
       font-weight: 800;
       color: #FFFFFF;
       letter-spacing: 8px;
-      text-shadow: 0 0 40px #863bff, 0 0 80px #863bff;
       opacity: 0;
+      z-index: 10;
     }
     
     /* Línea decorativa */
@@ -68,6 +144,7 @@
       height: 3px;
       background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
       opacity: 0;
+      z-index: 10;
     }
     
     /* Gota de agua */
@@ -76,9 +153,10 @@
       top: -200px;
       left: 50%;
       transform: translateX(-50%);
-      width: 120px;
-      height: 150px;
+      width: 100px;
+      height: 130px;
       opacity: 0;
+      z-index: 5;
     }
     
     .gota svg {
@@ -87,16 +165,16 @@
       filter: drop-shadow(0 0 20px #47bfff);
     }
     
-    /* Ripple circles */
+    /* Ripples */
     .ripple {
       position: absolute;
-      top: 38%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
       border: 2px solid #47bfff;
       border-radius: 50%;
       opacity: 0;
-      box-shadow: 0 0 15px rgba(71, 191, 255, 0.4);
+      z-index: 4;
     }
     
     /* Texto principal */
@@ -112,6 +190,7 @@
       letter-spacing: 3px;
       opacity: 0;
       line-height: 1.4;
+      z-index: 10;
     }
     
     .texto-principal span {
@@ -126,10 +205,11 @@
       transform: translateX(-50%);
       text-align: center;
       opacity: 0;
+      z-index: 10;
     }
     
     .dato-cip .numero {
-      font-size: clamp(72px, 18vw, 140px);
+      font-size: clamp(80px, 20vw, 140px);
       font-weight: 800;
       color: #47bfff;
       text-shadow: 0 0 50px #47bfff;
@@ -144,7 +224,7 @@
       margin-top: 8px;
     }
     
-    /* Logo cultura t */
+    /* Logo CT */
     .logo-ct {
       position: absolute;
       bottom: 12%;
@@ -152,6 +232,7 @@
       transform: translateX(-50%);
       text-align: center;
       opacity: 0;
+      z-index: 10;
     }
     
     .logo-ct .marca {
@@ -178,21 +259,10 @@
     /* Partículas */
     .particula {
       position: absolute;
-      width: 4px;
-      height: 4px;
       background: #863bff;
       border-radius: 50%;
       opacity: 0;
-      box-shadow: 0 0 6px #863bff;
-    }
-    
-    /* Pájaro volando */
-    .pajaro-volando {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      opacity: 0;
-      filter: drop-shadow(0 0 15px #863bff);
+      z-index: 3;
     }
     
     /* Fade final */
@@ -204,25 +274,54 @@
       height: 100%;
       background: #0A0A0A;
       opacity: 0;
+      z-index: 20;
       pointer-events: none;
-      z-index: 50;
+    }
+    
+    /* ===== CLASES PARA ANIMACIONES CSS ===== */
+    
+    .anim-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    
+    .anim-scale-in {
+      animation: scaleIn 1s ease-out forwards;
+    }
+    
+    .anim-pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .anim-float-up {
+      animation: floatUp 1.2s ease-out forwards;
+    }
+    
+    .anim-text-glow {
+      animation: textGlow 2s ease-in-out infinite;
+    }
+    
+    .anim-fade-out {
+      animation: fadeOut 1.5s ease-in forwards;
+    }
+    
+    .anim-count {
+      animation: countUp 1s ease-out forwards;
     }
   </style>
 </head>
 <body>
   <div class="container" id="video">
+    <div class="bg"></div>
     
-    <!-- Partículas de fondo -->
+    <!-- Partículas generadas por JS -->
     <div id="particulas"></div>
     
-    <!-- Logo FONTUR pájaro -->
+    <!-- Logo FONTUR -->
     <div class="logo-fontur" id="logoFontur">
-      <svg viewBox="0 0 48 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 48 46" fill="none">
         <path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
-        <g fill="#47bfff">
-          <ellipse cx="10" cy="29" rx="5" ry="15" transform="rotate(-5 10 29)"/>
-          <ellipse cx="38" cy="32" rx="6" ry="15" transform="rotate(-5 38 32)"/>
-        </g>
+        <ellipse cx="12" cy="30" rx="5" ry="12" fill="#47bfff" transform="rotate(-8 12 30)"/>
+        <ellipse cx="38" cy="33" rx="6" ry="14" fill="#47bfff" transform="rotate(-8 38 33)"/>
       </svg>
     </div>
     
@@ -235,7 +334,7 @@
       <svg viewBox="0 0 80 100" fill="none">
         <path d="M40 5C40 5 10 45 10 65C10 82 23.5 95 40 95C56.5 95 70 82 70 65C70 45 40 5 40 5Z" 
               fill="url(#gradGota)" stroke="#47bfff" stroke-width="2"/>
-        <ellipse cx="40" cy="70" rx="15" ry="8" fill="rgba(255,255,255,0.3)"/>
+        <ellipse cx="30" cy="65" rx="10" ry="5" fill="rgba(255,255,255,0.4)"/>
         <defs>
           <linearGradient id="gradGota" x1="40" y1="5" x2="40" y2="95">
             <stop offset="0%" stop-color="#47bfff"/>
@@ -257,7 +356,7 @@
     
     <!-- Datos CIP -->
     <div class="dato-cip" id="datoCip">
-      <div class="numero">73%</div>
+      <div class="numero" id="numeroCip">0</div>
       <div class="etiqueta">GESTIÓN EFICIENTE</div>
     </div>
     
@@ -268,13 +367,6 @@
       <div class="slogan">Turismo con sentido</div>
     </div>
     
-    <!-- Pájaro volando -->
-    <div class="pajaro-volando" id="pajaro">
-      <svg viewBox="0 0 48 46" fill="none">
-        <path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
-      </svg>
-    </div>
-    
     <!-- Fade negro -->
     <div class="fade-negro" id="fadeNegro"></div>
     
@@ -283,163 +375,59 @@
   <script>
     // Crear partículas
     const container = document.getElementById('particulas');
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 40; i++) {
       const p = document.createElement('div');
       p.className = 'particula';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.top = Math.random() * 100 + '%';
+      p.style.left = (5 + Math.random() * 90) + '%';
+      p.style.top = (5 + Math.random() * 90) + '%';
       p.style.width = (2 + Math.random() * 4) + 'px';
       p.style.height = p.style.width;
       container.appendChild(p);
     }
     
-    // Timeline 45 segundos
-    const tl = anime.timeline({
-      easing: 'easeOutQuad',
-    });
+    // Usar GSAP para timeline principal
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
     
-    // ===== 0-3s: Logo pájaro aparece =====
-    tl.add({
-      targets: '#logoFontur',
-      opacity: [0, 1],
-      scale: [0, 1],
-      duration: 1500,
-      easing: 'easeOutBack'
-    })
-    .add({
-      targets: '#logoFontur',
-      scale: [1, 1.2, 1],
-      duration: 1500,
-      easing: 'easeInOutQuad'
-    }, '+=500');
+    // 0-3s: Logo pájaro
+    tl.to('#logoFontur', { scale: 1, opacity: 1, duration: 1.5 }, 0)
+      .to('#logoFontur', { scale: 1.15, duration: 1.5 }, 1.5)
+      .to('#logoFontur', { scale: 1, duration: 0.5 }, 3);
     
-    // ===== 3-8s: Título entra =====
-    .add({
-      targets: '#titulo',
-      opacity: [0, 1],
-      scale: [0, 1],
-      duration: 1200,
-      easing: 'easeOutBack'
-    }, '+=200')
-    .add({
-      targets: '#linea',
-      opacity: [0, 1],
-      width: ['0px', '300px'],
-      duration: 800,
-      easing: 'easeOutQuad'
-    }, '+=300');
+    // 3-8s: Título
+    tl.to('#titulo', { scale: 1, opacity: 1, duration: 1.2 }, 3.2)
+      .to('#linea', { width: 300, opacity: 1, duration: 0.8 }, 4);
     
-    // ===== 8-15s: Gota cae =====
-    .add({
-      targets: '#gota',
-      opacity: [0, 1],
-      translateY: ['-200px', '0px'],
-      duration: 100,
-      easing: 'easeOutQuad'
-    }, '+=500')
-    .add({
-      targets: '#gota',
-      translateY: ['0px', '38vh'],
-      duration: 5000,
-      easing: 'easeInQuad'
-    })
-    .add({
-      targets: '#gota',
-      opacity: [1, 0],
-      scale: [1, 2],
-      duration: 500,
-      easing: 'easeOutQuad'
-    });
+    // 8-15s: Gota
+    tl.to('#gota', { y: '60vh', opacity: 1, duration: 5, ease: "power1.in" }, 8)
+      .to('#gota', { scale: 1.5, opacity: 0, duration: 0.5 }, 13);
     
-    // ===== 15-20s: Ripples =====
-    .add({
-      targets: '#ripple1',
-      opacity: [{value: 0.7}, {value: 0}],
-      width: ['50px', '400px'],
-      height: ['50px', '400px'],
-      duration: 2000,
-      easing: 'easeOutQuad'
-    }, '-=300')
-    .add({
-      targets: '#ripple2',
-      opacity: [{value: 0.5}, {value: 0}],
-      width: ['50px', '550px'],
-      height: ['50px', '550px'],
-      duration: 2500,
-      easing: 'easeOutQuad'
-    }, '-=2000')
-    .add({
-      targets: '#ripple3',
-      opacity: [{value: 0.3}, {value: 0}],
-      width: ['50px', '700px'],
-      height: ['50px', '700px'],
-      duration: 3000,
-      easing: 'easeOutQuad'
-    }, '-=2500');
+    // 14-20s: Ripples
+    tl.to('#ripple1', { width: 400, height: 400, opacity: 0.7, duration: 2 }, 14)
+      .to('#ripple1', { opacity: 0, duration: 0.5 }, 16)
+      .to('#ripple2', { width: 600, height: 600, opacity: 0.5, duration: 2.5 }, 15.5)
+      .to('#ripple2', { opacity: 0, duration: 0.5 }, 18)
+      .to('#ripple3', { width: 800, height: 800, opacity: 0.3, duration: 3 }, 17)
+      .to('#ripple3', { opacity: 0, duration: 0.5 }, 20);
     
-    // ===== 20-25s: Texto principal =====
-    .add({
-      targets: '#textoPrincipal',
-      opacity: [0, 1],
-      translateY: [30, 0],
-      duration: 1200,
-      easing: 'easeOutQuart'
-    }, '+=500');
+    // 20-25s: Texto
+    tl.to('#textoPrincipal', { opacity: 1, y: 0, duration: 1.2 }, 20.5);
     
-    // ===== 25-32s: Datos CIP =====
-    .add({
-      targets: '#textoPrincipal',
-      opacity: [1, 0],
-      duration: 500,
-      easing: 'easeOutQuad'
-    }, '+=500')
-    .add({
-      targets: '#datoCip',
-      opacity: [0, 1],
-      duration: 800,
-      easing: 'easeOutQuart'
-    }, '-=300')
-    .add({
-      targets: '#datoCip .numero',
-      innerHTML: ['0', '73%'],
-      round: 1,
-      duration: 2000,
-      easing: 'easeOutQuart'
-    })
-    .add({
-      targets: '#datoCip',
-      opacity: [1, 0],
-      duration: 800,
-      easing: 'easeOutQuad'
-    }, '+=1000');
+    // 25-32s: Datos
+    tl.to('#textoPrincipal', { opacity: 0, duration: 0.5 }, 25)
+      .to('#datoCip', { opacity: 1, duration: 0.8 }, 25.5)
+      .to('#numeroCip', { innerText: 73, duration: 2, snap: { innerText: 1 } }, 26)
+      .to('#datoCip', { opacity: 0, duration: 0.8 }, 31);
     
-    // ===== 32-38s: Logo CT + pájaro volando =====
-    .add({
-      targets: '#logoCT',
-      opacity: [0, 1],
-      translateY: [50, 0],
-      duration: 1200,
-      easing: 'easeOutQuart'
-    }, '+=500');
+    // 32-38s: Logo CT
+    tl.to('#logoCT', { opacity: 1, y: 0, duration: 1.2 }, 32);
     
-    // ===== 38-43s: Fade final =====
-    .add({
-      targets: '#fadeNegro',
-      opacity: [0, 1],
-      duration: 2000,
-      easing: 'easeInQuad'
-    }, '+=3000')
-    .add({
-      targets: ['#logoFontur', '#titulo', '#linea', '#logoCT'],
-      opacity: [1, 0],
-      duration: 1500,
-      easing: 'easeOutQuad'
-    }, '-=2000');
+    // 38-45s: Fade
+    tl.to('#fadeNegro', { opacity: 1, duration: 2 }, 38)
+      .to(['#logoFontur', '#titulo', '#linea', '#logoCT'], { opacity: 0, duration: 1 }, 38);
     
-    // Fin
-    tl.finished.then(() => {
-      // Loop o mensaje final
-      document.getElementById('video').innerHTML += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:24px;letter-spacing:4px;">FIN - GRABA ESTA PANTALLA</div>';
+    // Mensaje final
+    tl.call(() => {
+      document.getElementById('video').innerHTML += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:20px;letter-spacing:4px;text-align:center;z-index:100;">GRABA ESTA PANTALLA<br><span style="font-size:14px;color:#FF8B00;">45 segundos</span></div>';
     });
   </script>
 </body>
