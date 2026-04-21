@@ -7,125 +7,111 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     body {
       background: #0A0A0A;
       min-height: 100vh;
       font-family: 'Poppins', sans-serif;
       color: white;
-      overflow-x: hidden;
-    }
-    
-    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 40px 20px;
-      text-align: center;
-      background: linear-gradient(180deg, #1B365D 0%, #0A0A0A 100%);
     }
-    
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
     .header .logo {
-      font-size: 36px;
+      font-size: 48px;
       font-weight: 800;
       color: #FFFFFF;
       letter-spacing: 4px;
     }
-    
     .header .tagline {
+      font-size: 18px;
+      color: #863bff;
+      margin-top: 10px;
+    }
+    .header .slogan {
       font-size: 16px;
-      color: #00B4D8;
+      color: #FF8B00;
       margin-top: 8px;
     }
-    
-    .header .slogan {
-      font-size: 18px;
-      color: #FF8B00;
-      margin-top: 12px;
-      font-weight: 600;
-    }
-    
-    .videos-grid {
+    .videos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      padding: 40px 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
       max-width: 1200px;
-      margin: 0 auto;
+      width: 100%;
     }
-    
     .video-card {
       background: linear-gradient(135deg, #1B365D 0%, #0A0A0A 100%);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid rgba(0,180,216,0.2);
+      border: 1px solid rgba(134, 59, 255, 0.3);
     }
-    
     .video-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,180,216,0.2);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(134, 59, 255, 0.3);
     }
-    
+    .video-card a {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
     .video-card .preview {
-      width: 100%;
       aspect-ratio: 9/16;
       background: #0A0A0A;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      font-size: 80px;
       position: relative;
-      overflow: hidden;
     }
-    
-    .video-card .preview .icon {
-      font-size: 64px;
-      opacity: 0.8;
-    }
-    
     .video-card .preview .play {
       position: absolute;
-      width: 60px;
-      height: 60px;
-      background: rgba(255,139,0,0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-    
-    .video-card .info {
-      padding: 20px;
-    }
-    
-    .video-card .title {
-      font-size: 20px;
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: 2px;
-    }
-    
-    .video-card .desc {
-      font-size: 14px;
-      color: rgba(255,255,255,0.7);
-      margin-top: 8px;
-    }
-    
-    .video-card .tag {
-      display: inline-block;
+      bottom: 20px;
       background: #FF8B00;
       color: #0A0A0A;
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-top: 12px;
-      letter-spacing: 1px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      letter-spacing: 2px;
     }
-    
+    .video-card .info {
+      padding: 24px;
+    }
+    .video-card .title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 3px;
+    }
+    .video-card .desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 8px;
+    }
+    .video-card .duracion {
+      display: inline-block;
+      background: #863bff;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 15px;
+      margin-top: 12px;
+    }
+    .proximo {
+      opacity: 0.4;
+    }
     .footer {
-      text-align: center;
-      padding: 40px;
-      color: rgba(255,255,255,0.4);
+      margin-top: 60px;
+      color: rgba(255,255,255,0.3);
       font-size: 14px;
     }
   </style>
@@ -135,89 +121,65 @@
   <div class="header">
     <div class="logo">cultura t®</div>
     <div class="tagline">Gestión y desarrollo</div>
-    <div class="slogan">Turismo con sentido para comunicar, liderar y transformar</div>
+    <div class="slogan">Turismo con sentido</div>
   </div>
   
-  <div class="videos-grid">
+  <div class="videos">
     
-    <a href="video/sostenibilidad.html" style="text-decoration:none;">
-      <div class="video-card">
+    <div class="video-card">
+      <a href="sostenibilidad/index.html">
         <div class="preview">
-          <span class="icon">💧</span>
-          <div class="play">▶</div>
+          💧
+          <span class="play">VER VIDEO</span>
         </div>
         <div class="info">
           <div class="title">SOSTENIBILIDAD</div>
-          <div class="desc">El turismo que deja huella. Gota de agua en cámara lenta.</div>
-          <div class="tag">NUEVO</div>
+          <div class="desc">El turismo que deja huella. 45 segundos de video puro CSS.</div>
+          <span class="duracion">45 SEGUNDOS</span>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
     
-    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+    <div class="video-card proximo">
       <div class="preview">
-        <span class="icon">📊</span>
-        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+        📊
+        <span class="play" style="background:rgba(255,255,255,0.2);">PRÓXIMO</span>
       </div>
       <div class="info">
         <div class="title">GESTIÓN</div>
-        <div class="desc">Resultados ejecutivos 2024. Próximamente.</div>
-        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+        <div class="desc">Resultados ejecutivos CIP 2024.</div>
+        <span class="duracion" style="background:#1B365D;">PRÓXIMO</span>
       </div>
     </div>
     
-    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+    <div class="video-card proximo">
       <div class="preview">
-        <span class="icon">🏔️</span>
-        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+        🏔️
+        <span class="play" style="background:rgba(255,255,255,0.2);">PRÓXIMO</span>
       </div>
       <div class="info">
         <div class="title">AVENTURA</div>
-        <div class="desc">Promoción turística. Próximamente.</div>
-        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+        <div class="desc">Promoción turística de Colombia.</div>
+        <span class="duracion" style="background:#1B365D;">PRÓXIMO</span>
       </div>
     </div>
     
-    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
+    <div class="video-card proximo">
       <div class="preview">
-        <span class="icon">🎭</span>
-        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
+        🎭
+        <span class="play" style="background:rgba(255,255,255,0.2);">PRÓXIMO</span>
       </div>
       <div class="info">
         <div class="title">CULTURA</div>
-        <div class="desc">Patrimonio y eventos. Próximamente.</div>
-        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
-      </div>
-    </div>
-    
-    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
-      <div class="preview">
-        <span class="icon">💰</span>
-        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
-      </div>
-      <div class="info">
-        <div class="title">ECONOMÍA NARANJA</div>
-        <div class="desc">Inversión y empleos. Próximamente.</div>
-        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
-      </div>
-    </div>
-    
-    <div class="video-card" style="opacity:0.5; cursor:not-allowed;">
-      <div class="preview">
-        <span class="icon">🌐</span>
-        <div class="play" style="background:rgba(255,255,255,0.2);">🔒</div>
-      </div>
-      <div class="info">
-        <div class="title">CONECTIVIDAD</div>
-        <div class="desc">Digitalización. Próximamente.</div>
-        <div class="tag" style="background:#1B365D; color:#00B4D8;">PRÓXIMAMENTE</div>
+        <div class="desc">Patrimonio y eventos culturales.</div>
+        <span class="duracion" style="background:#1B365D;">PRÓXIMO</span>
       </div>
     </div>
     
   </div>
   
   <div class="footer">
-    © 2026 Cultura T - Gestión y desarrollo turístico
+    © 2026 Cultura T - Haz clic en un video para reproducir y grabar
   </div>
   
 </body>

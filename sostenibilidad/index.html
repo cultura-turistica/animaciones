@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cultura T - Sostenibilidad</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.3.2/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: #0A0A0A;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .container {
+      width: 100vw;
+      height: 100vh;
+      max-width: 1080px;
+      max-height: 1920px;
+      margin: 0 auto;
+      position: relative;
+      background: #0A0A0A;
+      overflow: hidden;
+    }
+    
+    /* Logo pájaro FONTUR */
+    .logo-fontur {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 200px;
+      height: 200px;
+      opacity: 0;
+    }
+    
+    .logo-fontur svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 30px #863bff);
+    }
+    
+    /* Título Sostenibilidad */
+    .titulo {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      font-size: clamp(48px, 12vw, 80px);
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 8px;
+      text-shadow: 0 0 40px #863bff, 0 0 80px #863bff;
+      opacity: 0;
+    }
+    
+    /* Línea decorativa */
+    .linea {
+      position: absolute;
+      top: 23%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
+      opacity: 0;
+    }
+    
+    /* Gota de agua */
+    .gota {
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 150px;
+      opacity: 0;
+    }
+    
+    .gota svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 20px #47bfff);
+    }
+    
+    /* Ripple circles */
+    .ripple {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid #47bfff;
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: 0 0 15px rgba(71, 191, 255, 0.4);
+    }
+    
+    /* Texto principal */
+    .texto-principal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 600;
+      color: #FFFFFF;
+      text-align: center;
+      letter-spacing: 3px;
+      opacity: 0;
+      line-height: 1.4;
+    }
+    
+    .texto-principal span {
+      color: #FF8B00;
+    }
+    
+    /* Datos CIP */
+    .dato-cip {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      opacity: 0;
+    }
+    
+    .dato-cip .numero {
+      font-size: clamp(72px, 18vw, 140px);
+      font-weight: 800;
+      color: #47bfff;
+      text-shadow: 0 0 50px #47bfff;
+      line-height: 1;
+    }
+    
+    .dato-cip .etiqueta {
+      font-size: clamp(16px, 3.5vw, 28px);
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: 4px;
+      margin-top: 8px;
+    }
+    
+    /* Logo cultura t */
+    .logo-ct {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      opacity: 0;
+    }
+    
+    .logo-ct .marca {
+      font-size: clamp(36px, 8vw, 56px);
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 4px;
+    }
+    
+    .logo-ct .tagline {
+      font-size: clamp(14px, 2.5vw, 20px);
+      color: #863bff;
+      letter-spacing: 3px;
+      margin-top: 10px;
+    }
+    
+    .logo-ct .slogan {
+      font-size: clamp(12px, 2.5vw, 18px);
+      color: #FF8B00;
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+    
+    /* Partículas */
+    .particula {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #863bff;
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: 0 0 6px #863bff;
+    }
+    
+    /* Pájaro volando */
+    .pajaro-volando {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      opacity: 0;
+      filter: drop-shadow(0 0 15px #863bff);
+    }
+    
+    /* Fade final */
+    .fade-negro {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0A0A0A;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="video">
+    
+    <!-- Partículas de fondo -->
+    <div id="particulas"></div>
+    
+    <!-- Logo FONTUR pájaro -->
+    <div class="logo-fontur" id="logoFontur">
+      <svg viewBox="0 0 48 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
+        <g fill="#47bfff">
+          <ellipse cx="10" cy="29" rx="5" ry="15" transform="rotate(-5 10 29)"/>
+          <ellipse cx="38" cy="32" rx="6" ry="15" transform="rotate(-5 38 32)"/>
+        </g>
+      </svg>
+    </div>
+    
+    <!-- Título -->
+    <div class="titulo" id="titulo">SOSTENIBILIDAD</div>
+    <div class="linea" id="linea"></div>
+    
+    <!-- Gota -->
+    <div class="gota" id="gota">
+      <svg viewBox="0 0 80 100" fill="none">
+        <path d="M40 5C40 5 10 45 10 65C10 82 23.5 95 40 95C56.5 95 70 82 70 65C70 45 40 5 40 5Z" 
+              fill="url(#gradGota)" stroke="#47bfff" stroke-width="2"/>
+        <ellipse cx="40" cy="70" rx="15" ry="8" fill="rgba(255,255,255,0.3)"/>
+        <defs>
+          <linearGradient id="gradGota" x1="40" y1="5" x2="40" y2="95">
+            <stop offset="0%" stop-color="#47bfff"/>
+            <stop offset="100%" stop-color="#863bff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    
+    <!-- Ripples -->
+    <div class="ripple" id="ripple1" style="width:50px;height:50px;"></div>
+    <div class="ripple" id="ripple2" style="width:50px;height:50px;"></div>
+    <div class="ripple" id="ripple3" style="width:50px;height:50px;"></div>
+    
+    <!-- Texto principal -->
+    <div class="texto-principal" id="textoPrincipal">
+      El turismo que<br><span>deja huella</span>
+    </div>
+    
+    <!-- Datos CIP -->
+    <div class="dato-cip" id="datoCip">
+      <div class="numero">73%</div>
+      <div class="etiqueta">GESTIÓN EFICIENTE</div>
+    </div>
+    
+    <!-- Logo CT -->
+    <div class="logo-ct" id="logoCT">
+      <div class="marca">cultura t®</div>
+      <div class="tagline">Gestión y desarrollo</div>
+      <div class="slogan">Turismo con sentido</div>
+    </div>
+    
+    <!-- Pájaro volando -->
+    <div class="pajaro-volando" id="pajaro">
+      <svg viewBox="0 0 48 46" fill="none">
+        <path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
+      </svg>
+    </div>
+    
+    <!-- Fade negro -->
+    <div class="fade-negro" id="fadeNegro"></div>
+    
+  </div>
+  
+  <script>
+    // Crear partículas
+    const container = document.getElementById('particulas');
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement('div');
+      p.className = 'particula';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.width = (2 + Math.random() * 4) + 'px';
+      p.style.height = p.style.width;
+      container.appendChild(p);
+    }
+    
+    // Timeline 45 segundos
+    const tl = anime.timeline({
+      easing: 'easeOutQuad',
+    });
+    
+    // ===== 0-3s: Logo pájaro aparece =====
+    tl.add({
+      targets: '#logoFontur',
+      opacity: [0, 1],
+      scale: [0, 1],
+      duration: 1500,
+      easing: 'easeOutBack'
+    })
+    .add({
+      targets: '#logoFontur',
+      scale: [1, 1.2, 1],
+      duration: 1500,
+      easing: 'easeInOutQuad'
+    }, '+=500');
+    
+    // ===== 3-8s: Título entra =====
+    .add({
+      targets: '#titulo',
+      opacity: [0, 1],
+      scale: [0, 1],
+      duration: 1200,
+      easing: 'easeOutBack'
+    }, '+=200')
+    .add({
+      targets: '#linea',
+      opacity: [0, 1],
+      width: ['0px', '300px'],
+      duration: 800,
+      easing: 'easeOutQuad'
+    }, '+=300');
+    
+    // ===== 8-15s: Gota cae =====
+    .add({
+      targets: '#gota',
+      opacity: [0, 1],
+      translateY: ['-200px', '0px'],
+      duration: 100,
+      easing: 'easeOutQuad'
+    }, '+=500')
+    .add({
+      targets: '#gota',
+      translateY: ['0px', '38vh'],
+      duration: 5000,
+      easing: 'easeInQuad'
+    })
+    .add({
+      targets: '#gota',
+      opacity: [1, 0],
+      scale: [1, 2],
+      duration: 500,
+      easing: 'easeOutQuad'
+    });
+    
+    // ===== 15-20s: Ripples =====
+    .add({
+      targets: '#ripple1',
+      opacity: [{value: 0.7}, {value: 0}],
+      width: ['50px', '400px'],
+      height: ['50px', '400px'],
+      duration: 2000,
+      easing: 'easeOutQuad'
+    }, '-=300')
+    .add({
+      targets: '#ripple2',
+      opacity: [{value: 0.5}, {value: 0}],
+      width: ['50px', '550px'],
+      height: ['50px', '550px'],
+      duration: 2500,
+      easing: 'easeOutQuad'
+    }, '-=2000')
+    .add({
+      targets: '#ripple3',
+      opacity: [{value: 0.3}, {value: 0}],
+      width: ['50px', '700px'],
+      height: ['50px', '700px'],
+      duration: 3000,
+      easing: 'easeOutQuad'
+    }, '-=2500');
+    
+    // ===== 20-25s: Texto principal =====
+    .add({
+      targets: '#textoPrincipal',
+      opacity: [0, 1],
+      translateY: [30, 0],
+      duration: 1200,
+      easing: 'easeOutQuart'
+    }, '+=500');
+    
+    // ===== 25-32s: Datos CIP =====
+    .add({
+      targets: '#textoPrincipal',
+      opacity: [1, 0],
+      duration: 500,
+      easing: 'easeOutQuad'
+    }, '+=500')
+    .add({
+      targets: '#datoCip',
+      opacity: [0, 1],
+      duration: 800,
+      easing: 'easeOutQuart'
+    }, '-=300')
+    .add({
+      targets: '#datoCip .numero',
+      innerHTML: ['0', '73%'],
+      round: 1,
+      duration: 2000,
+      easing: 'easeOutQuart'
+    })
+    .add({
+      targets: '#datoCip',
+      opacity: [1, 0],
+      duration: 800,
+      easing: 'easeOutQuad'
+    }, '+=1000');
+    
+    // ===== 32-38s: Logo CT + pájaro volando =====
+    .add({
+      targets: '#logoCT',
+      opacity: [0, 1],
+      translateY: [50, 0],
+      duration: 1200,
+      easing: 'easeOutQuart'
+    }, '+=500');
+    
+    // ===== 38-43s: Fade final =====
+    .add({
+      targets: '#fadeNegro',
+      opacity: [0, 1],
+      duration: 2000,
+      easing: 'easeInQuad'
+    }, '+=3000')
+    .add({
+      targets: ['#logoFontur', '#titulo', '#linea', '#logoCT'],
+      opacity: [1, 0],
+      duration: 1500,
+      easing: 'easeOutQuad'
+    }, '-=2000');
+    
+    // Fin
+    tl.finished.then(() => {
+      // Loop o mensaje final
+      document.getElementById('video').innerHTML += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:24px;letter-spacing:4px;">FIN - GRABA ESTA PANTALLA</div>';
+    });
+  </script>
+</body>
+</html>
