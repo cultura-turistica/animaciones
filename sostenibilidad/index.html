@@ -26,44 +26,40 @@
       max-width: 450px;
       max-height: 800px;
       background: #000;
-      overflow: hidden; /* CRÍTICO: recorta todo lo que sale */
+      overflow: hidden;
     }
     
-    /* ===== CAPAS DE IMAGEN ===== */
+    /* ===== FONDOS ===== */
     .bg-image {
       position: absolute;
-      top: -5%;
-      left: -5%;
-      width: 110%;
-      height: 110%;
+      top: -5%; left: -5%;
+      width: 110%; height: 110%;
       background-size: cover;
       background-position: center;
       opacity: 0;
       will-change: opacity, transform;
     }
     
-    /* Fotos verificadas de naturaleza (Colombia-like) */
-    .bg-1 { background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80'); } /* montañas */
-    .bg-2 { background-image: url('https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=1200&q=80'); } /* cascadas */
-    .bg-3 { background-image: url('https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1200&q=80'); } /* bosque tropical */
-    .bg-4 { background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80'); } /* playa tropical */
+    /* Pexels fotos verificadas HTTP 200 */
+    .bg-1 { background-image: url('https://images.pexels.com/photos/235734/pexels-photo-235734.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
+    .bg-2 { background-image: url('https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
+    .bg-3 { background-image: url('https://images.pexels.com/photos/1695181/pexels-photo-1695181.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
+    .bg-4 { background-image: url('https://images.pexels.com/photos/3822628/pexels-photo-3822628.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
     
-    /* Overlay */
     .overlay {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: linear-gradient(180deg, 
-        rgba(0,0,0,0.85) 0%, 
-        rgba(0,0,0,0.15) 25%,
-        rgba(0,0,0,0.15) 75%,
-        rgba(0,0,0,0.9) 100%);
+        rgba(0,0,0,0.88) 0%, 
+        rgba(0,0,0,0.1) 25%,
+        rgba(0,0,0,0.1) 75%,
+        rgba(0,0,0,0.92) 100%);
       z-index: 5;
     }
     
-    /* ===== CONTENEDORES DE TEXTO - TODOS LIMITADOS AL MARCO ===== */
-    
-    .content-wrapper {
+    /* ===== CONTENEDOR PRINCIPAL - CENTRA TODO ===== */
+    .main-container {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -72,129 +68,140 @@
       align-items: center;
       justify-content: center;
       z-index: 10;
-      overflow: hidden; /* Recorta cualquier desbordamiento */
-      padding: 20px;
+      padding: 15px 20px;
     }
     
-    /* Dato grande */
-    .stat-big {
+    /* ===== ESTADÍSTICA GRANDE ===== */
+    .stat-block {
       text-align: center;
+      width: 100%;
       opacity: 0;
-      max-width: 100%;
-      overflow: hidden;
     }
     
-    .stat-big .number {
-      font-size: clamp(70px, 28vw, 130px);
+    .stat-block .number {
+      font-size: clamp(65px, 26vw, 120px);
       font-weight: 800;
       color: #47bfff;
       line-height: 1;
-      text-shadow: 0 0 50px rgba(71, 191, 255, 0.5);
+      letter-spacing: -2px;
     }
     
-    .stat-big .label {
-      font-size: clamp(11px, 3.5vw, 20px);
+    .stat-block .label {
+      font-size: clamp(10px, 3.2vw, 18px);
       font-weight: 600;
       color: #fff;
       letter-spacing: 3px;
       margin-top: 8px;
-      word-wrap: break-word;
+      text-transform: uppercase;
       max-width: 100%;
     }
     
-    .stat-big .sublabel {
-      font-size: clamp(9px, 2.2vw, 14px);
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 2px;
-      margin-top: 6px;
-      max-width: 100%;
+    .stat-block .sublabel {
+      font-size: clamp(8px, 2vw, 13px);
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+      margin-top: 5px;
     }
     
-    /* Frase narrativa */
-    .narrative {
+    /* ===== NARRATIVA / FRASE ===== */
+    .narrative-block {
       text-align: center;
+      width: 100%;
       opacity: 0;
-      max-width: 90%;
-      overflow: hidden;
     }
     
-    .narrative .quote {
-      font-size: clamp(20px, 5.5vw, 34px);
+    .narrative-block .quote {
+      font-size: clamp(19px, 5vw, 32px);
       font-weight: 600;
       color: #fff;
-      line-height: 1.35;
+      line-height: 1.4;
     }
     
-    .narrative .source {
-      font-size: clamp(9px, 2vw, 13px);
-      color: rgba(255,255,255,0.45);
+    .narrative-block .attr {
+      font-size: clamp(8px, 1.8vw, 12px);
+      color: rgba(255,255,255,0.4);
       letter-spacing: 2px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
     
-    /* Título sección */
-    .section-title {
+    /* ===== TÍTULO PRINCIPAL - DOS LÍNEAS ===== */
+    .title-block {
       text-align: center;
+      width: 100%;
       opacity: 0;
-      max-width: 100%;
-      overflow: hidden;
     }
     
-    .section-title .main {
-      font-size: clamp(32px, 9vw, 56px);
+    .title-block .line1 {
+      font-size: clamp(28px, 8.5vw, 54px);
       font-weight: 800;
       color: #fff;
-      letter-spacing: 5px;
+      letter-spacing: 3px;
+      line-height: 1.1;
       text-shadow: 0 0 40px rgba(134, 59, 255, 0.7);
     }
     
-    .section-title .accent {
-      font-size: clamp(14px, 3.8vw, 22px);
+    .title-block .line2 {
+      font-size: clamp(28px, 8.5vw, 54px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 3px;
+      line-height: 1.1;
+      text-shadow: 0 0 40px rgba(134, 59, 255, 0.7);
+    }
+    
+    .title-block .accent {
+      font-size: clamp(13px, 3.5vw, 20px);
       font-weight: 300;
       color: #FF8B00;
       letter-spacing: 2px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
     
-    /* Logo */
-    .logo-bottom {
+    /* ===== LÍNEA DECORATIVA ===== */
+    .deco-bar {
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
+      opacity: 0;
+      margin: 10px auto;
+    }
+    
+    /* ===== LOGO ===== */
+    .logo-block {
       position: absolute;
-      bottom: 5%;
+      bottom: 4%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
       opacity: 0;
       white-space: nowrap;
-      z-index: 10;
     }
     
-    .logo-bottom .brand {
-      font-size: clamp(18px, 5vw, 28px);
+    .logo-block .brand {
+      font-size: clamp(16px, 4.5vw, 26px);
       font-weight: 800;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 3px;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 2px;
     }
     
-    .logo-bottom .tagline {
-      font-size: clamp(8px, 2vw, 12px);
+    .logo-block .slogan {
+      font-size: clamp(8px, 1.8vw, 11px);
       color: rgba(255,255,255,0.35);
       letter-spacing: 2px;
       margin-top: 3px;
     }
     
-    /* Deco bar */
-    .deco-bar {
+    /* ===== COUNTDOWN ===== */
+    .countdown {
       position: absolute;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
-      z-index: 10;
-      opacity: 0;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      top: 3%;
+      right: 4%;
+      font-size: 9px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 2px;
     }
     
-    /* Fade final */
+    /* ===== FADE ===== */
     .fadeout {
       position: absolute;
       top: 0; left: 0;
@@ -203,174 +210,156 @@
       opacity: 0;
       z-index: 15;
     }
-    
-    /* Contador */
-    .countdown {
-      position: absolute;
-      top: 4%;
-      right: 5%;
-      font-size: 10px;
-      color: rgba(255,255,255,0.25);
-      letter-spacing: 2px;
-      z-index: 12;
-    }
-    
-    /* Nota grab */
-    .grab-note {
-      position: absolute;
-      bottom: 16%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 2px;
-      z-index: 12;
-      opacity: 0;
-      white-space: nowrap;
-    }
   </style>
 </head>
 <body>
 
 <div class="phone-frame" id="video">
 
-  <!-- Fondos verificados -->
+  <!-- Fondos -->
   <div class="bg-image bg-1" id="bg1"></div>
   <div class="bg-image bg-2" id="bg2"></div>
   <div class="bg-image bg-3" id="bg3"></div>
   <div class="bg-image bg-4" id="bg4"></div>
-  
-  <!-- Overlay -->
   <div class="overlay"></div>
   
-  <!-- ESCENA 1: 6.7M -->
-  <div class="content-wrapper" id="w1" style="display:none;">
-    <div class="stat-big" id="stat1">
-      <div class="number">6.7M</div>
-      <div class="label">TURISTAS EN COLOMBIA</div>
-      <div class="sublabel">2024 — Récord histórico</div>
+  <!-- ESCENA 1: Dato 80% -->
+  <div class="main-container" id="s1">
+    <div class="stat-block" id="stat1">
+      <div class="number">80%</div>
+      <div class="label">prefieren turismo sostenible</div>
+      <div class="sublabel">a nivel global</div>
     </div>
   </div>
   
   <!-- ESCENA 2: Pregunta -->
-  <div class="content-wrapper" id="w2" style="display:none;">
-    <div class="narrative" id="scene2">
-      <div class="quote">¿Cómo proteger lo que nos visita?</div>
-      <div class="source">El turismo que deja huella</div>
+  <div class="main-container" id="s2">
+    <div class="narrative-block" id="narr1">
+      <div class="quote">¿Por qué importa<br>el turismo sostenible?</div>
     </div>
   </div>
   
-  <!-- ESCENA 3: Biodiversidad -->
-  <div class="content-wrapper" id="w3" style="display:none;">
-    <div class="stat-big" id="stat2">
-      <div class="number">#1</div>
-      <div class="label">BIODIVERSIDAD MUNDIAL</div>
-      <div class="sublabel">1.937 especies de aves • 10% del planeta</div>
+  <!-- ESCENA 3: Dato 13% -->
+  <div class="main-container" id="s3">
+    <div class="stat-block" id="stat2">
+      <div class="number">13%</div>
+      <div class="label">crece el mercado anual</div>
+      <div class="sublabel">turismo responsable</div>
     </div>
   </div>
   
-  <!-- ESCENA 4: Sierra Nevada -->
-  <div class="content-wrapper" id="w4" style="display:none;">
-    <div class="narrative" id="scene4">
-      <div class="quote">La Sierra Nevada de Santa Marta:<br>la más irremplazable del mundo</div>
-      <div class="source">UICN — Unión Internacional para la Conservación</div>
+  <!-- ESCENA 4: Dato 1 de 4 -->
+  <div class="main-container" id="s4">
+    <div class="stat-block" id="stat3">
+      <div class="number">1/4</div>
+      <div class="label">viajes ya son ecoturismo</div>
+      <div class="sublabel">a nivel mundial</div>
     </div>
   </div>
   
-  <!-- ESCENA 5: 61% -->
-  <div class="content-wrapper" id="w5" style="display:none;">
-    <div class="stat-big" id="stat3">
-      <div class="number">61%</div>
-      <div class="label">PAGARÍAN MÁS</div>
-      <div class="sublabel">por turismo sostenible en Colombia</div>
+  <!-- ESCENA 5: Pregunta 2 -->
+  <div class="main-container" id="s5">
+    <div class="narrative-block" id="narr2">
+      <div class="quote">Cada viaje es una<br>decisión. ¿La tuya cuál es?</div>
     </div>
   </div>
   
-  <!-- ESCENA 6: Cierre -->
-  <div class="content-wrapper" id="w6" style="display:none;">
-    <div class="section-title" id="scene6">
-      <div class="main">SOSTENIBILIDAD</div>
+  <!-- ESCENA 6: Título final en 2 líneas -->
+  <div class="main-container" id="s6">
+    <div class="title-block" id="titleBlock">
+      <div class="line1">SOSTENI-</div>
+      <div class="line2">BILIDAD</div>
       <div class="accent">No es opción. Es supervivencia.</div>
     </div>
+    <div class="deco-bar" id="decoBar"></div>
   </div>
   
-  <div class="deco-bar" id="decoBar"></div>
-  
-  <div class="logo-bottom" id="logo">
+  <!-- Logo -->
+  <div class="logo-block" id="logo">
     <div class="brand">cultura t®</div>
-    <div class="tagline">Gestión y desarrollo</div>
+    <div class="slogan">Gestión y desarrollo</div>
   </div>
   
-  <div class="countdown" id="countdown">45s</div>
-  
-  <div class="grab-note" id="grabNote">GRABA 1080×1920</div>
+  <div class="countdown">45s</div>
   
   <div class="fadeout" id="fadeout"></div>
   
 </div>
 
 <script>
-  // Mostrar contenedores
-  ['w1','w2','w3','w4','w5','w6'].forEach(id => {
-    document.getElementById(id).style.display = 'flex';
+  // Ocultar escenas inicialmente
+  ['s1','s2','s3','s4','s5','s6'].forEach(id => {
+    document.getElementById(id).style.opacity = '0';
+    document.getElementById(id).style.visibility = 'hidden';
   });
+  document.getElementById('s1').style.visibility = 'visible';
   
-  // Timeline GSAP - 45s, MÁS RÁPIDO
+  // Timeline GSAP - 45 segundos
   const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
   
-  // 0-4s: Entrada 6.7M
-  tl.to('#bg1', { opacity: 1, duration: 1.5 }, 0)
-    .from('#bg1', { scale: 1.25, duration: 5 }, 0)
-    .to('#stat1', { opacity: 1, y: 0, duration: 1 }, 0.5)
-    .to('#stat1', { opacity: 0, duration: 0.8 }, 3.5);
+  // 0-5s: 80%
+  tl.set('#s1', { visibility: 'visible' })
+    .to('#bg1', { opacity: 1, duration: 1.5 }, 0)
+    .from('#bg1', { scale: 1.25, duration: 6 }, 0)
+    .to('#stat1', { opacity: 1, duration: 1.2 }, 0.8)
+    .to('#s1', { opacity: 0, duration: 0.8 }, 4.5)
+    .set('#s1', { visibility: 'hidden' });
   
-  // 4-7s: Pregunta
-  tl.to('#scene2', { opacity: 1, y: 0, duration: 0.8 }, 4)
-    .to('#scene2', { opacity: 0, duration: 0.6 }, 6.5);
+  // 5-9s: Transición + Pregunta 1
+  tl.to('#bg1', { opacity: 0, scale: 1.1, duration: 1 }, 5.2)
+    .to('#bg2', { opacity: 1, duration: 1 }, 6)
+    .from('#bg2', { scale: 1.3, duration: 6 }, 6)
+    .set('#s2', { visibility: 'visible' })
+    .to('#s2', { opacity: 1, duration: 1 }, 6.5)
+    .to('#s2', { opacity: 0, duration: 0.8 }, 8.5)
+    .set('#s2', { visibility: 'hidden' });
   
-  // 7-11s: Biodiversidad + transición
-  tl.to('#bg1', { opacity: 0, scale: 1.1, duration: 1 }, 7)
-    .to('#bg2', { opacity: 1, duration: 1 }, 7.8)
-    .from('#bg2', { scale: 1.3, duration: 5 }, 7.8)
-    .to('#stat2', { opacity: 1, duration: 0.8 }, 8.5)
-    .to('#stat2', { opacity: 0, duration: 0.6 }, 10.5);
+  // 9-13s: Transición + 13%
+  tl.to('#bg2', { opacity: 0, scale: 1.1, duration: 1 }, 9.2)
+    .to('#bg3', { opacity: 1, duration: 1 }, 9.8)
+    .from('#bg3', { scale: 1.3, duration: 6 }, 9.8)
+    .set('#s3', { visibility: 'visible' })
+    .to('#stat2', { opacity: 1, duration: 1 }, 10.5)
+    .to('#s3', { opacity: 0, duration: 0.8 }, 13)
+    .set('#s3', { visibility: 'hidden' });
   
-  // 11-15s: Sierra Nevada
-  tl.to('#scene4', { opacity: 1, duration: 0.8 }, 11.5)
-    .to('#scene4', { opacity: 0, duration: 0.6 }, 14.5);
+  // 13-17s: Transición + 1/4
+  tl.to('#bg3', { opacity: 0, scale: 1.1, duration: 1 }, 13.2)
+    .to('#bg4', { opacity: 1, duration: 1 }, 13.8)
+    .from('#bg4', { scale: 1.3, duration: 6 }, 13.8)
+    .set('#s4', { visibility: 'visible' })
+    .to('#stat3', { opacity: 1, duration: 1 }, 14.5)
+    .to('#s4', { opacity: 0, duration: 0.8 }, 17)
+    .set('#s4', { visibility: 'hidden' });
   
-  // 15-19s: Transición + bosque
-  tl.to('#bg2', { opacity: 0, scale: 1.1, duration: 1 }, 15)
-    .to('#bg3', { opacity: 1, duration: 1 }, 15.8)
-    .from('#bg3', { scale: 1.3, duration: 5 }, 15.8);
+  // 17-21s: Transición + Pregunta 2
+  tl.to('#bg4', { opacity: 0, scale: 1.1, duration: 1 }, 17.2)
+    .to('#bg1', { opacity: 1, duration: 1 }, 17.8)
+    .from('#bg1', { scale: 1.3, duration: 6 }, 17.8)
+    .set('#s5', { visibility: 'visible' })
+    .to('#s5', { opacity: 1, duration: 1 }, 18.5)
+    .to('#s5', { opacity: 0, duration: 0.8 }, 21)
+    .set('#s5', { visibility: 'hidden' });
   
-  // 19-23s: 61%
-  tl.to('#stat3', { opacity: 1, duration: 0.8 }, 19.5)
-    .to('#stat3', { opacity: 0, duration: 0.6 }, 22.5);
+  // 21-28s: Título FINAL
+  tl.to('#bg1', { opacity: 0.3, duration: 1 }, 21.5)
+    .set('#s6', { visibility: 'visible' })
+    .to('#s6', { opacity: 1, duration: 1.2 }, 22)
+    .to('#decoBar', { width: 160, opacity: 1, duration: 1 }, 23)
+    .to('#logo', { opacity: 1, duration: 1 }, 24);
   
-  // 23-27s: Transición + playa
-  tl.to('#bg3', { opacity: 0, scale: 1.1, duration: 1 }, 23)
-    .to('#bg4', { opacity: 1, duration: 1 }, 23.8)
-    .from('#bg4', { scale: 1.3, duration: 5 }, 23.8);
+  // 28-32s: Logo visible
+  tl.to('#s6', { opacity: 0, duration: 1 }, 28)
+    .set('#s6', { visibility: 'hidden' });
   
-  // 27-32s: Cierre
-  tl.to('#scene6', { opacity: 1, duration: 1 }, 28)
-    .to('#scene6', { opacity: 0, duration: 0.8 }, 31.5);
-  
-  // 32-36s: Logo
-  tl.to('#bg4', { opacity: 0.3, duration: 1 }, 32.5)
-    .to('#decoBar', { width: 180, opacity: 1, duration: 0.8 }, 33)
-    .to('#logo', { opacity: 1, duration: 1 }, 33.5)
-    .to('#grabNote', { opacity: 1, duration: 1 }, 34);
-  
-  // 36-40s: Fade out
-  tl.to('#fadeout', { opacity: 1, duration: 1.5 }, 39)
-    .to(['#logo', '#decoBar', '#grabNote'], { opacity: 0, duration: 1 }, 39);
+  // 32-39s: Fade final
+  tl.to('#logo', { opacity: 0, duration: 1 }, 33)
+    .to('#fadeout', { opacity: 1, duration: 2 }, 38);
   
   // Mensaje final
   tl.call(() => {
     document.getElementById('video').innerHTML += 
-      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:12px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.9);padding:20px;border-radius:8px;max-width:85%;">GRABA ESTA PANTALLA<br><span style="font-size:10px;color:#FF8B00;">1080×1920 • 45 segundos</span></div>';
+      '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:11px;letter-spacing:3px;text-align:center;z-index:100;background:rgba(0,0,0,0.92);padding:18px;border-radius:8px;">GRABA ESTA PANTALLA<br><span style="font-size:10px;color:#FF8B00;">1080×1920 • 45 segundos</span></div>';
   });
 </script>
 
