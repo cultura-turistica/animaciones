@@ -10,24 +10,34 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      background: #0A0A0A;
+      background: #111111;
       min-height: 100vh;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Poppins', sans-serif;
+      overflow: hidden;
     }
     
-    .container {
+    /* Marco vertical tipo teléfono - 9:16 */
+    .phone-frame {
+      position: relative;
       width: 100vw;
       height: 100vh;
-      max-width: 1080px;
-      max-height: 1920px;
-      margin: 0 auto;
-      position: relative;
+      max-width: 450px;
+      max-height: 800px;
       background: #0A0A0A;
       overflow: hidden;
+      border-radius: 0;
+      box-shadow: 0 0 60px rgba(134, 59, 255, 0.3);
     }
     
     /* ===== ANIMACIONES CSS ===== */
+    
+    @keyframes scaleIn {
+      from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
     
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -39,77 +49,37 @@
       to { opacity: 0; }
     }
     
-    @keyframes scaleIn {
-      from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    }
-    
-    @keyframes dropFall {
-      0% { transform: translateX(-50%) translateY(-200px); opacity: 0; }
-      10% { opacity: 1; }
-      35% { transform: translateX(-50%) translateY(0); opacity: 1; }
-      40% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0; }
-      100% { transform: translateX(-50%) translateY(0); opacity: 0; }
-    }
-    
-    @keyframes ripple1 {
-      0% { width: 50px; height: 50px; opacity: 0; }
-      20% { opacity: 0.7; }
-      100% { width: 400px; height: 400px; opacity: 0; }
-    }
-    
-    @keyframes ripple2 {
-      0% { width: 50px; height: 50px; opacity: 0; }
-      20% { opacity: 0.5; }
-      100% { width: 600px; height: 600px; opacity: 0; }
-    }
-    
-    @keyframes ripple3 {
-      0% { width: 50px; height: 50px; opacity: 0; }
-      20% { opacity: 0.3; }
-      100% { width: 800px; height: 800px; opacity: 0; }
-    }
-    
-    @keyframes floatUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
     @keyframes textGlow {
       0%, 100% { text-shadow: 0 0 40px #863bff; }
       50% { text-shadow: 0 0 80px #863bff, 0 0 120px #47bfff; }
     }
     
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-    }
-    
-    @keyframes countUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
     /* ===== ELEMENTOS ===== */
     
-    /* Fondo con gradiente sutil */
     .bg {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at center, #1B365D 0%, #0A0A0A 70%);
+      background: radial-gradient(ellipse at center top, #1B365D 0%, #0A0A0A 60%);
     }
     
-    /* Logo FONTUR pájaro */
+    .particula {
+      position: absolute;
+      background: #863bff;
+      border-radius: 50%;
+      opacity: 0;
+    }
+    
+    /* Logo FONTUR */
     .logo-fontur {
       position: absolute;
-      top: 30%;
+      top: 25%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      width: 180px;
-      height: 180px;
+      width: 120px;
+      height: 120px;
       opacity: 0;
       z-index: 10;
     }
@@ -117,44 +87,44 @@
     .logo-fontur svg {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 0 30px #863bff);
+      filter: drop-shadow(0 0 25px #863bff);
     }
     
     /* Título */
     .titulo {
       position: absolute;
-      top: 15%;
+      top: 12%;
       left: 50%;
       transform: translateX(-50%) scale(0);
-      font-size: clamp(48px, 12vw, 80px);
+      font-size: clamp(36px, 9vw, 56px);
       font-weight: 800;
       color: #FFFFFF;
-      letter-spacing: 8px;
+      letter-spacing: 6px;
       opacity: 0;
       z-index: 10;
+      text-shadow: 0 0 40px #863bff;
     }
     
-    /* Línea decorativa */
     .linea {
       position: absolute;
-      top: 23%;
+      top: 19%;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
-      height: 3px;
+      height: 2px;
       background: linear-gradient(90deg, transparent, #863bff, #47bfff, transparent);
       opacity: 0;
       z-index: 10;
     }
     
-    /* Gota de agua */
+    /* Gota */
     .gota {
       position: absolute;
-      top: -200px;
+      top: -150px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 130px;
+      width: 80px;
+      height: 100px;
       opacity: 0;
       z-index: 5;
     }
@@ -162,13 +132,13 @@
     .gota svg {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 0 20px #47bfff);
+      filter: drop-shadow(0 0 15px #47bfff);
     }
     
     /* Ripples */
     .ripple {
       position: absolute;
-      top: 40%;
+      top: 38%;
       left: 50%;
       transform: translate(-50%, -50%);
       border: 2px solid #47bfff;
@@ -177,19 +147,19 @@
       z-index: 4;
     }
     
-    /* Texto principal */
+    /* Texto */
     .texto-principal {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: clamp(28px, 6vw, 48px);
+      font-size: clamp(22px, 5.5vw, 36px);
       font-weight: 600;
       color: #FFFFFF;
       text-align: center;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       opacity: 0;
-      line-height: 1.4;
+      line-height: 1.5;
       z-index: 10;
     }
     
@@ -200,7 +170,7 @@
     /* Datos CIP */
     .dato-cip {
       position: absolute;
-      top: 35%;
+      top: 40%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -209,7 +179,7 @@
     }
     
     .dato-cip .numero {
-      font-size: clamp(80px, 20vw, 140px);
+      font-size: clamp(70px, 18vw, 120px);
       font-weight: 800;
       color: #47bfff;
       text-shadow: 0 0 50px #47bfff;
@@ -217,17 +187,17 @@
     }
     
     .dato-cip .etiqueta {
-      font-size: clamp(16px, 3.5vw, 28px);
+      font-size: clamp(14px, 3vw, 22px);
       font-weight: 600;
       color: #FFFFFF;
       letter-spacing: 4px;
-      margin-top: 8px;
+      margin-top: 5px;
     }
     
     /* Logo CT */
     .logo-ct {
       position: absolute;
-      bottom: 12%;
+      bottom: 10%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -236,33 +206,24 @@
     }
     
     .logo-ct .marca {
-      font-size: clamp(36px, 8vw, 56px);
+      font-size: clamp(28px, 7vw, 44px);
       font-weight: 800;
       color: #FFFFFF;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
     }
     
     .logo-ct .tagline {
-      font-size: clamp(14px, 2.5vw, 20px);
+      font-size: clamp(11px, 2.5vw, 16px);
       color: #863bff;
-      letter-spacing: 3px;
-      margin-top: 10px;
+      letter-spacing: 2px;
+      margin-top: 6px;
     }
     
     .logo-ct .slogan {
-      font-size: clamp(12px, 2.5vw, 18px);
+      font-size: clamp(10px, 2.5vw, 14px);
       color: #FF8B00;
       letter-spacing: 2px;
-      margin-top: 8px;
-    }
-    
-    /* Partículas */
-    .particula {
-      position: absolute;
-      background: #863bff;
-      border-radius: 50%;
-      opacity: 0;
-      z-index: 3;
+      margin-top: 5px;
     }
     
     /* Fade final */
@@ -277,43 +238,13 @@
       z-index: 20;
       pointer-events: none;
     }
-    
-    /* ===== CLASES PARA ANIMACIONES CSS ===== */
-    
-    .anim-fade-in {
-      animation: fadeIn 0.8s ease-out forwards;
-    }
-    
-    .anim-scale-in {
-      animation: scaleIn 1s ease-out forwards;
-    }
-    
-    .anim-pulse {
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    .anim-float-up {
-      animation: floatUp 1.2s ease-out forwards;
-    }
-    
-    .anim-text-glow {
-      animation: textGlow 2s ease-in-out infinite;
-    }
-    
-    .anim-fade-out {
-      animation: fadeOut 1.5s ease-in forwards;
-    }
-    
-    .anim-count {
-      animation: countUp 1s ease-out forwards;
-    }
   </style>
 </head>
 <body>
-  <div class="container" id="video">
+  
+  <!-- Marco vertical 9:16 centrado -->
+  <div class="phone-frame" id="video">
     <div class="bg"></div>
-    
-    <!-- Partículas generadas por JS -->
     <div id="particulas"></div>
     
     <!-- Logo FONTUR -->
@@ -325,7 +256,6 @@
       </svg>
     </div>
     
-    <!-- Título -->
     <div class="titulo" id="titulo">SOSTENIBILIDAD</div>
     <div class="linea" id="linea"></div>
     
@@ -349,68 +279,63 @@
     <div class="ripple" id="ripple2" style="width:50px;height:50px;"></div>
     <div class="ripple" id="ripple3" style="width:50px;height:50px;"></div>
     
-    <!-- Texto principal -->
     <div class="texto-principal" id="textoPrincipal">
       El turismo que<br><span>deja huella</span>
     </div>
     
-    <!-- Datos CIP -->
     <div class="dato-cip" id="datoCip">
       <div class="numero" id="numeroCip">0</div>
       <div class="etiqueta">GESTIÓN EFICIENTE</div>
     </div>
     
-    <!-- Logo CT -->
     <div class="logo-ct" id="logoCT">
       <div class="marca">cultura t®</div>
       <div class="tagline">Gestión y desarrollo</div>
       <div class="slogan">Turismo con sentido</div>
     </div>
     
-    <!-- Fade negro -->
     <div class="fade-negro" id="fadeNegro"></div>
-    
   </div>
   
   <script>
-    // Crear partículas
+    // Partículas
     const container = document.getElementById('particulas');
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 30; i++) {
       const p = document.createElement('div');
       p.className = 'particula';
       p.style.left = (5 + Math.random() * 90) + '%';
       p.style.top = (5 + Math.random() * 90) + '%';
-      p.style.width = (2 + Math.random() * 4) + 'px';
+      p.style.width = (2 + Math.random() * 3) + 'px';
       p.style.height = p.style.width;
       container.appendChild(p);
     }
     
-    // Usar GSAP para timeline principal
+    // Timeline GSAP - 45 segundos
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
     
     // 0-3s: Logo pájaro
     tl.to('#logoFontur', { scale: 1, opacity: 1, duration: 1.5 }, 0)
-      .to('#logoFontur', { scale: 1.15, duration: 1.5 }, 1.5)
+      .to('#logoFontur', { scale: 1.1, duration: 1.5 }, 1.5)
       .to('#logoFontur', { scale: 1, duration: 0.5 }, 3);
     
     // 3-8s: Título
     tl.to('#titulo', { scale: 1, opacity: 1, duration: 1.2 }, 3.2)
-      .to('#linea', { width: 300, opacity: 1, duration: 0.8 }, 4);
+      .to('#linea', { width: 200, opacity: 1, duration: 0.8 }, 4);
     
     // 8-15s: Gota
-    tl.to('#gota', { y: '60vh', opacity: 1, duration: 5, ease: "power1.in" }, 8)
+    tl.to('#gota', { y: '55vh', opacity: 1, duration: 5, ease: "power1.in" }, 8)
       .to('#gota', { scale: 1.5, opacity: 0, duration: 0.5 }, 13);
     
     // 14-20s: Ripples
-    tl.to('#ripple1', { width: 400, height: 400, opacity: 0.7, duration: 2 }, 14)
+    tl.to('#ripple1', { width: 300, height: 300, opacity: 0.7, duration: 2 }, 14)
       .to('#ripple1', { opacity: 0, duration: 0.5 }, 16)
-      .to('#ripple2', { width: 600, height: 600, opacity: 0.5, duration: 2.5 }, 15.5)
+      .to('#ripple2', { width: 450, height: 450, opacity: 0.5, duration: 2.5 }, 15.5)
       .to('#ripple2', { opacity: 0, duration: 0.5 }, 18)
-      .to('#ripple3', { width: 800, height: 800, opacity: 0.3, duration: 3 }, 17)
+      .to('#ripple3', { width: 600, height: 600, opacity: 0.3, duration: 3 }, 17)
       .to('#ripple3', { opacity: 0, duration: 0.5 }, 20);
     
     // 20-25s: Texto
-    tl.to('#textoPrincipal', { opacity: 1, y: 0, duration: 1.2 }, 20.5);
+    tl.to('#textoPrincipal', { opacity: 1, duration: 1.2 }, 20.5);
     
     // 25-32s: Datos
     tl.to('#textoPrincipal', { opacity: 0, duration: 0.5 }, 25)
@@ -419,15 +344,14 @@
       .to('#datoCip', { opacity: 0, duration: 0.8 }, 31);
     
     // 32-38s: Logo CT
-    tl.to('#logoCT', { opacity: 1, y: 0, duration: 1.2 }, 32);
+    tl.to('#logoCT', { opacity: 1, duration: 1.2 }, 32);
     
     // 38-45s: Fade
     tl.to('#fadeNegro', { opacity: 1, duration: 2 }, 38)
       .to(['#logoFontur', '#titulo', '#linea', '#logoCT'], { opacity: 0, duration: 1 }, 38);
     
-    // Mensaje final
     tl.call(() => {
-      document.getElementById('video').innerHTML += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:20px;letter-spacing:4px;text-align:center;z-index:100;">GRABA ESTA PANTALLA<br><span style="font-size:14px;color:#FF8B00;">45 segundos</span></div>';
+      document.getElementById('video').innerHTML += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#863bff;font-size:16px;letter-spacing:3px;text-align:center;z-index:100;">GRABA ESTA PANTALLA<br><span style="font-size:12px;color:#FF8B00;">45 segundos</span></div>';
     });
   </script>
 </body>
