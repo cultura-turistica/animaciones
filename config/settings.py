@@ -135,6 +135,23 @@ SESSION_SAVE_EVERY_REQUEST = True
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "Cultura T Educación <noreply@culturat.edu.co>"
 
+# ─── Security (Production) ──────────────────────────────────────
+if not DEBUG:
+    # Force HTTPS everywhere
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # HSTS (HTTP Strict Transport Security)
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    # Cookies seguros
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Content type sniffing protection
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    # X-Frame-Options
+    X_FRAME_OPTIONS = "DENY"
+
 # Charts.js — included via CDN in templates
 # Chart.js CDN: https://cdn.jsdelivr.net/npm/chart.js
 
