@@ -1,14 +1,152 @@
 {% extends "base.html" %}
-{% block title %}Inicio - Cultura T Educación{% endblock %}
+{% block title %}Cultura T Educación - Plataforma Escolar{% endblock %}
+
 {% block login_content %}
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="text-center">
-        <i class="bi bi-mortarboard-fill" style="font-size: 5em; color: var(--ct-primary);"></i>
-        <h1 class="mt-3">Cultura T Educación</h1>
-        <p class="lead text-muted">Plataforma de Gestión Escolar Multi-tenant</p>
-        <a href="{% url 'login' %}" class="btn btn-ct btn-lg mt-3">
-            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+<style>
+.landing-wrapper{min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(160deg,#1a2e0d 0%,#2D5016 40%,#3d6b1e 100%);}
+.landing-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;}
+.landing-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.landing-logo-icon{width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:14px;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;}
+.landing-logo-text{font-weight:800;font-size:20px;color:white;}
+.landing-logo-text span{display:block;font-size:12px;font-weight:400;opacity:0.8;}
+.landing-nav-links{display:flex;gap:8px;}
+.landing-nav-links a{color:rgba(255,255,255,0.85);text-decoration:none;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:500;transition:all 0.2s;}
+.landing-nav-links a:hover{background:rgba(255,255,255,0.15);color:white;}
+.landing-nav-links .btn-entrar{background:#8BC34A;color:#1a2e0d;font-weight:700;}
+.landing-nav-links .btn-entrar:hover{background:#a5d46b;color:#1a2e0d;}
+.landing-hero{flex:1;display:flex;align-items:center;padding:60px 40px;max-width:1200px;margin:0 auto;width:100%;gap:60px;}
+.landing-hero-content{flex:1;color:white;}
+.landing-hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(139,195,74,0.2);border:1px solid rgba(139,195,74,0.4);color:#a5d46b;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:24px;}
+.landing-hero h1{font-size:52px;font-weight:900;line-height:1.1;margin-bottom:20px;letter-spacing:-0.02em;}
+.landing-hero h1 .highlight{color:#8BC34A;}
+.landing-hero p{font-size:18px;line-height:1.7;opacity:0.85;margin-bottom:36px;max-width:520px;}
+.landing-hero-buttons{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-hero-primary{display:inline-flex;align-items:center;gap:8px;background:#8BC34A;color:#1a2e0d;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 20px rgba(139,195,74,0.4);}
+.btn-hero-primary:hover{background:#a5d46b;color:#1a2e0d;transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,195,74,0.5);}
+.btn-hero-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);color:white;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(10px);transition:all 0.2s;}
+.btn-hero-secondary:hover{background:rgba(255,255,255,0.2);color:white;transform:translateY(-2px);}
+.landing-hero-stats{display:flex;gap:32px;margin-top:48px;}
+.landing-stat{text-align:left;}
+.landing-stat-value{font-size:28px;font-weight:900;color:#8BC34A;}
+.landing-stat-label{font-size:12px;opacity:0.7;margin-top:2px;}
+.landing-hero-visual{flex:1;position:relative;}
+.landing-card-float{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:28px;backdrop-filter:blur(20px);position:relative;overflow:hidden;}
+.landing-card-float::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8BC34A,#2D5016);border-radius:20px 20px 0 0;}
+.landing-card-float h3{color:white;font-size:16px;font-weight:700;margin-bottom:16px;}
+.landing-card-float .row-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.9);font-size:14px;}
+.landing-card-float .row-item:last-child{border-bottom:none;}
+.landing-card-float .row-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.landing-dots{position:absolute;bottom:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(139,195,74,0.3) 0%,transparent 70%);border-radius:50%;}
+.landing-modules{background:#F0F4EC;padding:80px 40px;}
+.landing-modules-inner{max-width:1200px;margin:0 auto;}
+.landing-section-label{text-align:center;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8BC34A;margin-bottom:12px;}
+.landing-section-title{text-align:center;font-size:36px;font-weight:900;color:#1a2e0d;margin-bottom:12px;}
+.landing-section-subtitle{text-align:center;font-size:16px;color:#6B7280;margin-bottom:48px;}
+.landing-modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.landing-module-card{background:white;border-radius:16px;padding:24px;border:1px solid #E5E7EB;transition:all 0.2s;text-decoration:none;color:inherit;display:block;}
+.landing-module-card:hover{box-shadow:0 8px 30px rgba(0,0,0,0.1);transform:translateY(-3px);border-color:#8BC34A;}
+.landing-module-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;}
+.landing-module-card h4{font-size:15px;font-weight:700;color:#1a2e0d;margin-bottom:8px;}
+.landing-module-card p{font-size:13px;color:#6B7280;line-height:1.5;}
+.landing-footer{background:#1a2e0d;padding:24px 40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;}
+@media(max-width:768px){.landing-hero{flex-direction:column;padding:40px 20px;gap:40px;}.landing-hero h1{font-size:36px;}.landing-nav{padding:16px 20px;}.landing-modules{padding:60px 20px;}.landing-nav-links{display:none;}}
+</style>
+
+<div class="landing-wrapper">
+    <nav class="landing-nav">
+        <a href="/" class="landing-logo">
+            <div class="landing-logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="landing-logo-text">Cultura T<span>Educación</span></div>
         </a>
+        <div class="landing-nav-links">
+            <a href="#modulos">Módulos</a>
+            <a href="/login/" class="btn-entrar"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a>
+        </div>
+    </nav>
+
+    <div class="landing-hero">
+        <div class="landing-hero-content">
+            <div class="landing-hero-badge"><i class="bi bi-lightning-fill"></i> Plataforma Escolar Integral</div>
+            <h1>La gestión escolar que tu colegio<br><span class="highlight">merece tener</span></h1>
+            <p>Conecta a toda la comunidad educativa —directivos, docentes, estudiantes y padres— en un solo espacio. Optimiza procesos académicos, mejora la comunicación y accede a información en tiempo real.</p>
+            <div class="landing-hero-buttons">
+                <a href="/login/" class="btn-hero-primary"><i class="bi bi-rocket-takeoff"></i> Comenzar ahora</a>
+                <a href="#modulos" class="btn-hero-secondary"><i class="bi bi-grid-3x3-gap"></i> Ver módulos</a>
+            </div>
+            <div class="landing-hero-stats">
+                <div class="landing-stat"><div class="landing-stat-value">5</div><div class="landing-stat-label">Módulos integrados</div></div>
+                <div class="landing-stat"><div class="landing-stat-value">4</div><div class="landing-stat-label">Perfiles de usuario</div></div>
+                <div class="landing-stat"><div class="landing-stat-value">100%</div><div class="landing-stat-label">En línea</div></div>
+            </div>
+        </div>
+        <div class="landing-hero-visual">
+            <div class="landing-card-float">
+                <h3><i class="bi bi-grid-1x2-fill" style="color:#8BC34A;margin-right:8px;"></i> Panel de Control</h3>
+                <div class="row-item">
+                    <div class="row-icon" style="background:rgba(139,195,74,0.2);color:#8BC34A;"><i class="bi bi-people-fill"></i></div>
+                    <div><div style="font-weight:600;">Estudiantes</div><div style="font-size:11px;opacity:0.7;">Gestión completa de matrículas</div></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-icon" style="background:rgba(37,99,235,0.15);color:#2563EB;"><i class="bi bi-card-checklist"></i></div>
+                    <div><div style="font-weight:600;">Notas y Boletines</div><div style="font-size:11px;opacity:0.7;">Promedios y rankings automáticos</div></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-icon" style="background:rgba(124,58,237,0.15);color:#7C3AED;"><i class="bi bi-calendar-check"></i></div>
+                    <div><div style="font-weight:600;">Asistencias</div><div style="font-size:11px;opacity:0.7;">Control diario automático</div></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-icon" style="background:rgba(234,88,12,0.15);color:#EA580C;"><i class="bi bi-eye"></i></div>
+                    <div><div style="font-weight:600;">Observador</div><div style="font-size:11px;opacity:0.7;">Seguimiento comportamental</div></div>
+                </div>
+                <div class="landing-dots"></div>
+            </div>
+        </div>
     </div>
+
+    <section class="landing-modules" id="modulos">
+        <div class="landing-modules-inner">
+            <div class="landing-section-label">Herramientas</div>
+            <h2 class="landing-section-title">Módulos integrados</h2>
+            <p class="landing-section-subtitle">Todo lo que tu comunidad educativa necesita en una sola plataforma</p>
+            <div class="landing-modules-grid">
+                <div class="landing-module-card">
+                    <div class="landing-module-icon" style="background:#ECFDF5;color:#059670;"><i class="bi bi-file-earmark-richtext"></i></div>
+                    <h4>Académico</h4>
+                    <p>Notas, boletines, promedios automáticos y rendimiento por periodo.</p>
+                </div>
+                <div class="landing-module-card">
+                    <div class="landing-module-icon" style="background:#EFF6FF;color:#2563EB;"><i class="bi bi-calendar-check"></i></div>
+                    <h4>Asistencias</h4>
+                    <p>Control diario de asistencia por grado y generación de reportes.</p>
+                </div>
+                <div class="landing-module-card">
+                    <div class="landing-module-icon" style="background:#F5F3FF;color:#7C3AED;"><i class="bi bi-eye"></i></div>
+                    <h4>Observador</h4>
+                    <p>Seguimiento comportamental con tipos y niveles de gravedad.</p>
+                </div>
+                <div class="landing-module-card">
+                    <div class="landing-module-icon" style="background:#FFF7ED;color:#EA580C;"><i class="bi bi-calendar-event"></i></div>
+                    <h4>Agenda</h4>
+                    <p>Eventos institucionales, programación y notificaciones.</p>
+                </div>
+                <div class="landing-module-card">
+                    <div class="landing-module-icon" style="background:#FEF2F2;color:#DC2626;"><i class="bi bi-bar-chart-fill"></i></div>
+                    <h4>Informes</h4>
+                    <p>Reportes, estadísticas, certificados y planillas de notas.</p>
+                </div>
+                <div class="landing-module-card">
+                    <div class="landing-module-icon" style="background:#F0F4EC;color:#2D5016;"><i class="bi bi-grid-3x3-gap"></i></div>
+                    <h4>Parcelador</h4>
+                    <p>Programación de horarios docentes y distribución de clases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="landing-footer">
+        © 2026 Cultura T Educación — Plataforma escolar multi-tenant.
+        &nbsp;|&nbsp;
+        <a href="/login/" style="color:#8BC34A;text-decoration:none;">Iniciar sesión</a>
+    </footer>
 </div>
 {% endblock %}

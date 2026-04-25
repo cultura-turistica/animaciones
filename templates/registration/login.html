@@ -1,53 +1,234 @@
 {% extends "base.html" %}
-
-{% block title %}Iniciar Sesión — Cultura T Educación{% endblock %}
+{% block title %}Iniciar Sesión - Cultura T Educación{% endblock %}
 
 {% block login_content %}
-<div class="login-wrapper">
+<style>
+.login-root {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #1a2e0d 0%, #2D5016 50%, #3d6b1e 100%);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.login-root::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(139,195,74,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(139,195,74,0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+.login-card {
+    background: white;
+    border-radius: 24px;
+    padding: 44px 40px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
+}
+.login-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+.login-logo-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #2D5016, #4A7023);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    margin: 0 auto 18px;
+    box-shadow: 0 8px 24px rgba(45,80,22,0.3);
+}
+.login-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1a2e0d;
+    margin-bottom: 6px;
+}
+.login-subtitle {
+    font-size: 14px;
+    color: #9CA3AF;
+    margin: 0;
+}
+.login-form .form-group {
+    margin-bottom: 18px;
+}
+.login-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.login-input-wrap {
+    position: relative;
+}
+.login-input-wrap i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+    font-size: 16px;
+    z-index: 2;
+}
+.login-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #1a2e0d;
+    background: #FAFAFA;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    outline: none;
+}
+.login-input:focus {
+    border-color: #2D5016;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(45,80,22,0.08);
+}
+.login-input::placeholder {
+    color: #D1D5DB;
+}
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #2D5016, #4A7023);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(45,80,22,0.3);
+}
+.btn-login:hover {
+    background: linear-gradient(135deg, #3d6b1e, #5a8a2e);
+    box-shadow: 0 6px 24px rgba(45,80,22,0.4);
+    transform: translateY(-1px);
+}
+.btn-login:active {
+    transform: translateY(0);
+}
+.login-error {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: #DC2626;
+}
+.login-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 13px;
+    color: #9CA3AF;
+}
+.login-footer a {
+    color: #2D5016;
+    text-decoration: none;
+    font-weight: 600;
+}
+.login-footer a:hover {
+    text-decoration: underline;
+}
+.login-brand {
+    text-align: center;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #F3F4F6;
+}
+.login-brand-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #9CA3AF;
+}
+</style>
+
+<div class="login-root">
     <div class="login-card">
         <div class="login-header">
-            <div class="login-logo"><i class="bi bi-mortarboard-fill"></i></div>
-            <div class="login-title">Cultura T Educación</div>
-            <div class="login-subtitle">Plataforma de Gestión Escolar Multi-tenant</div>
+            <div class="login-logo-icon">
+                <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <h1 class="login-title">Cultura T Educación</h1>
+            <p class="login-subtitle">Ingresa a tu cuenta para continuar</p>
         </div>
 
         {% if form.errors %}
-        <div class="alert alert-danger mb-3" style="border-radius: 10px; font-size: 13px;">
-            <i class="bi bi-exclamation-triangle-fill"></i> Usuario o contraseña incorrectos.
+        <div class="login-error">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            Usuario o contraseña incorrectos. Intenta de nuevo.
         </div>
         {% endif %}
 
-        <form method="post">
+        {% if next %}
+        <div class="login-error" style="background:#FFFBEB;border-color:#FDE68A;color:#D97706;">
+            <i class="bi bi-info-circle-fill"></i>
+            Inicia sesión para acceder a esta página.
+        </div>
+        {% endif %}
+
+        <form method="post" class="login-form">
             {% csrf_token %}
-            <div class="mb-3">
-                <label class="form-label" style="font-size: 13px; font-weight: 600;">Usuario</label>
-                <div class="input-group">
-                    <span class="input-group-text" style="border-radius: 8px 0 0 8px; border-right: none; background: white;">
-                        <i class="bi bi-person" style="color: var(--text-secondary);"></i>
-                    </span>
-                    <input type="text" name="username" class="form-control" 
-                           style="border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 14px;" 
-                           placeholder="Ingrese su usuario" required autofocus>
+            <div class="form-group">
+                <label for="id_username">
+                    <i class="bi bi-person-fill" style="font-size:11px;margin-right:4px;"></i>
+                    Usuario
+                </label>
+                <div class="login-input-wrap">
+                    <i class="bi bi-person"></i>
+                    <input type="text" name="username" id="id_username" class="login-input"
+                        placeholder="Tu nombre de usuario" required autofocus>
                 </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label" style="font-size: 13px; font-weight: 600;">Contraseña</label>
-                <div class="input-group">
-                    <span class="input-group-text" style="border-radius: 8px 0 0 8px; border-right: none; background: white;">
-                        <i class="bi bi-lock" style="color: var(--text-secondary);"></i>
-                    </span>
-                    <input type="password" name="password" class="form-control" 
-                           style="border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 14px;" 
-                           placeholder="Ingrese su contraseña" required>
+
+            <div class="form-group">
+                <label for="id_password">
+                    <i class="bi bi-lock-fill" style="font-size:11px;margin-right:4px;"></i>
+                    Contraseña
+                </label>
+                <div class="login-input-wrap">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" name="password" id="id_password" class="login-input"
+                        placeholder="Tu contraseña" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary-custom w-100" style="padding: 12px; font-size: 14px; margin-top: 8px;">
-                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+
+            <button type="submit" class="btn-login">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Iniciar Sesión
             </button>
         </form>
 
-        <div style="text-align: center; margin-top: 24px; font-size: 12px; color: var(--text-secondary);">
-            © 2026 Cultura T Educación
+        <div class="login-brand">
+            <div class="login-brand-name">Cultura T SAS — 2026</div>
         </div>
     </div>
 </div>
