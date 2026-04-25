@@ -634,49 +634,49 @@ def logout_view(request):
 @login_required
 def colegio_list(request):
     from django.shortcuts import render
-    return render(request, "core/crud.html", {"titulo": "Colegios"})
+    return render(request, "core/colegio_list.html", {"titulo": "Colegios"})
 
 @login_required
 def colegio_create(request):
     from django.shortcuts import render
-    return render(request, "core/crud_form.html", {"titulo": "Nuevo Colegio"})
+    return render(request, "core/colegio_form.html", {"titulo": "Nuevo Colegio"})
 
 @login_required
 def ano_escolar_list(request):
     from django.shortcuts import render
-    return render(request, "core/crud.html", {"titulo": "Años Escolares"})
+    return render(request, "core/ano_escolar_list.html", {"titulo": "Años Escolares"})
 
 @login_required
 def ano_escolar_create(request):
     from django.shortcuts import render
-    return render(request, "core/crud_form.html", {"titulo": "Nuevo Año Escolar"})
+    return render(request, "core/ano_escolar_form.html", {"titulo": "Nuevo Año Escolar"})
 
 @login_required
 def estudiante_list(request):
     from django.shortcuts import render
-    return render(request, "core/crud.html", {"titulo": "Estudiantes"})
+    return render(request, "core/estudiante_list.html", {"titulo": "Estudiantes"})
 
 @login_required
 def estudiante_create(request):
     from django.shortcuts import render
-    return render(request, "core/crud_form.html", {"titulo": "Nuevo Estudiante"})
+    return render(request, "core/estudiante_form.html", {"titulo": "Nuevo Estudiante"})
 
 @login_required
 def materia_list(request):
     from django.shortcuts import render
-    return render(request, "core/crud.html", {"titulo": "Materias"})
+    return render(request, "core/materia_list.html", {"titulo": "Materias"})
 
 @login_required
 def materia_create(request):
     from django.shortcuts import render
-    return render(request, "core/crud_form.html", {"titulo": "Nueva Materia"})
+    return render(request, "core/materia_form.html", {"titulo": "Nueva Materia"})
 
 @login_required
 def nota_list(request):
     from django.shortcuts import render
-    return render(request, "core/crud.html", {"titulo": "Notas"})
+    return render(request, "core/nota_list.html", {"titulo": "Notas"})
 
 @login_required
 def nota_create(request):
     from django.shortcuts import render
-    return render(request, "core/crud_form.html", {"titulo": "Nueva Nota"})
+    return render(request, "core/nota_form.html", {"titulo": "Nueva Nota"})
