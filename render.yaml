@@ -22,3 +22,4 @@ services:
         value: "false"
       - key: DATABASE_URL
         sync: false
+        value: "postgresql://postgres:On1026291904*@db.izsnyxujyrbksvtguwbd.supabase.co:5432/postgres"
