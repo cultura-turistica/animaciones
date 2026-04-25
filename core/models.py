@@ -359,7 +359,7 @@ class Observador(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, related_name="observaciones")
     ano_escolar = models.ForeignKey(AnoEscolar, on_delete=models.CASCADE, related_name="observaciones")
     fecha = models.DateField(default=timezone.now)
-    tipo = models.CharField(max_length=20, choices=TipoObservacion.choices, default=TipoObservacion.OBSERVACION)
+    tipo = models.CharField(max_length=20, choices=TipoObservacion.choices, default=TipoObservacion.POSITIVO)
     gravedad = models.CharField(max_length=20, choices=Gravedad.choices, default=Gravedad.LEVE)
     descripcion = models.TextField()
     profesor_reporta = models.ForeignKey(
