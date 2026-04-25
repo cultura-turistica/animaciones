@@ -1,8 +1,11 @@
-from django.urls import path
+from django.urls import path, redirect
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
+    # Redirect /index/ → /
+    path("index/", RedirectView.as_view(url="/", permanent=True)),
     # Home
     path("", views.home, name="home"),
 

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Página no encontrada - Cultura T Educación{% endblock %}
+
+{% block login_content %}
+<style>
+.error-root {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #1a2e0d 0%, #2D5016 50%, #3d6b1e 100%);
+    padding: 20px;
+}
+.error-card {
+    background: white;
+    border-radius: 24px;
+    padding: 48px 40px;
+    text-align: center;
+    max-width: 480px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+}
+.error-code {
+    font-size: 96px;
+    font-weight: 900;
+    color: #2D5016;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.15;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+.error-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+.error-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1a2e0d;
+    margin-bottom: 12px;
+}
+.error-text {
+    font-size: 15px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+.error-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #2D5016;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.error-btn:hover {
+    background: #3d6b1e;
+    color: white;
+    transform: translateY(-1px);
+}
+</style>
+
+<div class="error-root">
+    <div class="error-card" style="position:relative;overflow:hidden;">
+        <div class="error-code">404</div>
+        <div class="error-icon">🔍</div>
+        <h1 class="error-title">Página no encontrada</h1>
+        <p class="error-text">
+            La página que buscas no existe o fue movida.
+            Verifica que la dirección esté correcta.
+        </p>
+        <a href="/" class="error-btn">
+            <i class="bi bi-house-fill"></i>
+            Volver al inicio
+        </a>
+    </div>
+</div>
+{% endblock %}
