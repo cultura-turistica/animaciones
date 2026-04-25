@@ -21,8 +21,8 @@ class ColegioAdmin(admin.ModelAdmin):
 
 @admin.register(AnoEscolar)
 class AnoEscolarAdmin(admin.ModelAdmin):
-    list_display = ("colegio", "ano", "fecha_inicio", "fecha_fin", "activo")
-    list_filter = ("colegio", "activo", "ano")
+    list_display = ("colegio", "ano", "fecha_inicio", "fecha_fin", "estado")
+    list_filter = ("colegio", "estado", "ano")
     search_fields = ("colegio__nombre",)
 
 
