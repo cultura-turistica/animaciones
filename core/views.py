@@ -48,9 +48,10 @@ def filter_by_colegio(queryset, user):
 # ============================================================
 
 def home(request):
+    """Landing page pública — muestra a todos, autenticados van al dashboard."""
     if request.user.is_authenticated:
         return redirect("dashboard")
-    return redirect("login")
+    return render(request, "landing.html")
 
 
 # ============================================================
