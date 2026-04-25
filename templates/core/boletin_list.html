@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Boletines{% endblock %}
+{% block page_title %}Boletines{% endblock %}
+{% block breadcrumb %}<a href="{% url 'dashboard' %}">Inicio</a> / Boletines{% endblock %}
+
+{% block topbar_actions %}
+<a href="{% url 'boletin_generar' %}" class="btn-primary-custom">
+    <i class="bi bi-plus-circle"></i> Generar Boletines
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card-custom">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-file-earmark-richtext"></i> Boletines Generados</div>
+        <span class="badge-custom badge-info">{{ boletines|length }} boletines</span>
+    </div>
+    <div class="card-body p-0">
+        <table class="table-custom">
+            <thead><tr>
+                <th>Estudiante</th><th>Periodo</th><th>Promedio</th>
+                <th>Asistencia %</th><th>Fecha</th><th>Acciones</th>
+            </tr></thead>
+            <tbody>
+            {% for b in boletines %}
+            <tr>
+                <td><strong>{{ b.estudiante.usuario.get_full_name }}</strong></td>
+                <td><span class="badge-custom badge-info">P{{ b.periodo }}</span></td>
+                <td><strong>{{ b.promedio_general }}</strong></td>
+                <td>{{ b.asistencia_pct }}%</td>
+                <td>{{ b.fecha_generacion|date:"d M Y" }}</td>
+                <td><a href="{% url 'boletin_ver' b.uid %}" class="btn-secondary-custom" style="padding: 4px 10px; font-size: 11px;"><i class="bi bi-eye"></i> Ver</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center py-5" style="color: var(--text-secondary);">
+                <i class="bi bi-file-earmark" style="font-size: 40px;"></i>
+                <p class="mt-2">No hay boletines generados.</p>
+                <a href="{% url 'boletin_generar' %}" class="btn-primary-custom mt-2">Generar Ahora</a>
+            </td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

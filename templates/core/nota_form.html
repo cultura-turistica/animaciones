@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Nota{% endblock %}
+{% block content %}
+<div class="row"><div class="col-md-6 offset-md-3">
+    <div class="card">
+        <div class="card-header"><h4><i class="bi bi-pencil-square"></i> {{ action }} Nota</h4></div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3"><label class="form-label">Estudiante *</label><select name="estudiante" class="form-select" required><option value="">-- Seleccionar --</option>{% for e in estudiantes %}<option value="{{ e.id }}">{{ e.usuario.get_full_name }} ({{ e.grado }}{{ e.paralelo }})</option>{% endfor %}</select></div>
+                <div class="mb-3"><label class="form-label">Materia *</label><select name="materia" class="form-select" required><option value="">-- Seleccionar --</option>{% for m in materias %}<option value="{{ m.id }}">{{ m.nombre }}</option>{% endfor %}</select></div>
+                <div class="row mb-3">
+                    <div class="col"><label class="form-label">Año Escolar *</label><select name="ano_escolar" class="form-select" required><option value="">-- Seleccionar --</option>{% for a in anos %}<option value="{{ a.id }}">{{ a.colegio.nombre }} - {{ a.ano }}</option>{% endfor %}</select></div>
+                    <div class="col"><label class="form-label">Periodo *</label><select name="periodo" class="form-select" required><option value="1">Periodo 1</option><option value="2">Periodo 2</option><option value="3">Periodo 3</option><option value="4">Periodo 4</option><option value="F">Final</option></select></div>
+                </div>
+                <div class="mb-3"><label class="form-label">Valor *</label><input type="number" name="valor" step="0.01" min="0" max="10" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Observación</label><textarea name="observacion" class="form-control" rows="2"></textarea></div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% url 'nota_list' %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-ct">{{ action }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div></div>
+{% endblock %}

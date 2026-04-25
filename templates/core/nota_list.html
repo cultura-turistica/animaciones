@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Notas{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-card-checklist"></i> Notas</h3>
+    {% if es_rector or es_profesor %}
+    <a href="{% url 'nota_create' %}" class="btn btn-ct"><i class="bi bi-plus-circle"></i> Nueva Nota</a>
+    {% endif %}
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-8"><input type="text" name="q" class="form-control" placeholder="Buscar estudiante o materia..."></div>
+            <div class="col-md-4"><button type="submit" class="btn btn-ct w-100"><i class="bi bi-search"></i> Buscar</button></div>
+        </form>
+    </div>
+</div>
+<table class="table table-hover">
+    <thead><tr><th>Estudiante</th><th>Materia</th><th>Periodo</th><th>Valor</th><th>Fecha</th></tr></thead>
+    <tbody>
+    {% for n in notas %}
+    <tr>
+        <td>{{ n.estudiante.usuario.get_full_name }}</td>
+        <td>{{ n.materia.nombre }}</td>
+        <td>{{ n.get_periodo_display }}</td>
+        <td><strong>{{ n.valor }}</strong></td>
+        <td>{{ n.fecha|date:"d M Y" }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center text-muted">Sin notas registradas.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

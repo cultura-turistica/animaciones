@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Nueva Observación{% endblock %}
+{% block page_title %}Nueva Observación{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title"><i class="bi bi-eye"></i> Registrar Observación</div>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Estudiante *</label>
+                            <select name="estudiante" class="form-control" required>
+                                <option value="">-- Seleccionar --</option>
+                                {% for e in estudiantes %}<option value="{{ e.id }}">{{ e.usuario.get_full_name }} - {{ e.grado }}°</option>{% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Fecha *</label>
+                            <input type="date" name="fecha" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Tipo *</label>
+                            <select name="tipo" class="form-control" required>
+                                <option value="positivo">Positivo</option>
+                                <option value="negativo">Negativo</option>
+                                <option value="llamado">Llamado de Atención</option>
+                                <option value="academico">Académico</option>
+                                <option value="faltas">Registro de Faltas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size:13px; font-weight:600;">Gravedad *</label>
+                        <select name="gravedad" class="form-control" required>
+                            <option value="leve">Leve</option>
+                            <option value="moderado">Moderado</option>
+                            <option value="grave">Grave</option>
+                            <option value="muy_grave">Muy Grave</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size:13px; font-weight:600;">Descripción *</label>
+                        <textarea name="descripcion" class="form-control" rows="4" placeholder="Describa el acto o situación observada..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size:13px; font-weight:600;">Acciones Tomadas</label>
+                        <textarea name="acciones_tomadas" class="form-control" rows="2" placeholder="Medidas adoptadas..."></textarea>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'observador_list' %}" class="btn-secondary-custom">Cancelar</a>
+                        <button type="submit" class="btn-primary-custom">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Generar Boletines{% endblock %}
+{% block page_title %}Generar Boletines{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title"><i class="bi bi-file-earmark-richtext"></i> Generar Boletines Masivos</div>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Año Escolar *</label>
+                            <select name="ano_escolar" class="form-control" required>
+                                <option value="">-- Seleccionar --</option>
+                                {% for a in anos %}<option value="{{ a.id }}">{{ a.colegio.nombre }} - {{ a.ano }}</option>{% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Periodo *</label>
+                            <select name="periodo" class="form-control" required>
+                                <option value="1">Periodo 1</option>
+                                <option value="2">Periodo 2</option>
+                                <option value="3">Periodo 3</option>
+                                <option value="4">Periodo 4</option>
+                                <option value="F">Final</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Grado</label>
+                            <select name="grado" class="form-control">
+                                <option value="">Todos</option>
+                                {% for g in "0,1,2,3,4,5,6,7,8,9,10,11"|split:"," %}<option value="{{ g }}">{{ g }}°</option>{% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary-custom"><i class="bi bi-download"></i> Generar Boletines</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="stat-card" style="text-align: center;">
+            <i class="bi bi-info-circle" style="font-size: 32px; color: var(--primary);"></i>
+            <h5 class="mt-3" style="font-weight: 700;">¿Cómo funciona?</h5>
+            <p style="font-size: 13px; color: var(--text-secondary);">
+                El sistema calculará automáticamente el promedio de cada estudiante según las notas registradas en el periodo seleccionado, junto con su porcentaje de asistencia.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

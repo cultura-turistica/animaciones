@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Stats Row -->
+{% if es_rector %}
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-icon green"><i class="bi bi-people-fill"></i></div>
+                    <div class="stat-value mt-3">{{ total_estudiantes }}</div>
+                    <div class="stat-label">Estudiantes Matriculados</div>
+                    <div class="stat-change up"><i class="bi bi-arrow-up"></i> {{ estudiantes_activos }} activos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-icon blue"><i class="bi bi-mortarboard-fill"></i></div>
+                    <div class="stat-value mt-3">{{ total_profesores }}</div>
+                    <div class="stat-label">Profesores Activos</div>
+                    <div class="stat-change up"><i class="bi bi-check-circle"></i> Verificados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-icon purple"><i class="bi bi-percent"></i></div>
+                    <div class="stat-value mt-3">{{ asistencia_pct }}%</div>
+                    <div class="stat-label">Asistencia Hoy</div>
+                    <div class="stat-change {% if asistencia_pct >= 90 %}up{% else %}down{% endif %}">
+                        <i class="bi bi-{% if asistencia_pct >= 90 %}arrow-up{% else %}arrow-down{% endif %}"></i>
+                        {{ faltas_hoy }} faltas hoy
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-icon orange"><i class="bi bi-calendar-check"></i></div>
+                    <div class="stat-value mt-3">{{ ano_activo.ano|default:"—" }}</div>
+                    <div class="stat-label">Año Escolar Activo</div>
+                    <div class="stat-change up"><i class="bi bi-circle-fill" style="font-size:8px; color:#059669;"></i> {{ ano_activo.estado|default:"—" }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title">
+                    <i class="bi bi-bar-chart-fill"></i> Rendimiento por Periodo
+                </div>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+                <div class="chart-container">
+                    <canvas id="rendimientoChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title">
+                    <i class="bi bi-pie-chart-fill"></i> Distribución Estudiantes
+                </div>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+                <div class="chart-container">
+                    <canvas id="distribucionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Second Row -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title">
+                    <i class="bi bi-eye"></i> Últimas Observaciones
+                </div>
+                <a href="{% url 'observador_list' %}" class="btn-secondary-custom" style="padding: 5px 12px; font-size: 12px;">
+                    Ver todas <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="card-body p-0">
+                {% if obs_recientes %}
+                <table class="table-custom">
+                    <tbody>
+                        {% for obs in obs_recientes %}
+                        <tr>
+                            <td>
+                                <div style="font-weight: 600; font-size: 13px;">{{ obs.estudiante.usuario.get_full_name }}</div>
+                                <div style="font-size: 11px; color: var(--text-secondary);">{{ obs.fecha|date:"d M Y" }}</div>
+                            </td>
+                            <td>
+                                <span class="badge-custom badge-{% if obs.tipo == 'positivo' %}success{% elif obs.tipo == 'negativo' %}danger{% else %}info{% endif %}">
+                                    {{ obs.get_tipo_display }}
+                                </span>
+                            </td>
+                            <td style="text-align: right;">
+                                <span class="badge-custom badge-{% if obs.gravedad == 'grave' %}danger{% elif obs.gravedad == 'moderado' %}warning{% else %}neutral{% endif %}">
+                                    {{ obs.get_gravedad_display }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div style="padding: 24px; text-align: center; color: var(--text-secondary);">
+                    <i class="bi bi-check-circle" style="font-size: 32px;"></i>
+                    <p style="margin-top: 8px;">Sin observaciones recientes</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title">
+                    <i class="bi bi-calendar-event"></i> Próximos Eventos
+                </div>
+                <a href="{% url 'agenda_list' %}" class="btn-secondary-custom" style="padding: 5px 12px; font-size: 12px;">
+                    Ver agenda <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="card-body p-0">
+                {% if eventos %}
+                <table class="table-custom">
+                    <tbody>
+                        {% for ev in eventos %}
+                        <tr>
+                            <td style="width: 40px; text-align: center;">
+                                <div style="background: var(--bg-main); border-radius: 8px; padding: 6px; width: 38px;">
+                                    <div style="font-size: 14px; font-weight: 700; color: var(--primary);">{{ ev.fecha|date:"d" }}</div>
+                                    <div style="font-size: 9px; color: var(--text-secondary); text-transform: uppercase;">{{ ev.fecha|date:"M" }}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-weight: 600; font-size: 13px;">{{ ev.titulo }}</div>
+                                <div style="font-size: 11px; color: var(--text-secondary);">{{ ev.get_tipo_display }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div style="padding: 24px; text-align: center; color: var(--text-secondary);">
+                    <i class="bi bi-calendar" style="font-size: 32px;"></i>
+                    <p style="margin-top: 8px;">Sin eventos próximos</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex gap-3 flex-wrap" style="justify-content: center;">
+            <a href="{% url 'estudiante_create' %}" class="quick-action-btn">
+                <div class="quick-action-icon" style="background: #ECFDF5; color: #059669;">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <span style="font-size: 13px; font-weight: 600;">Nuevo Estudiante</span>
+            </a>
+            <a href="{% url 'nota_create' %}" class="quick-action-btn">
+                <div class="quick-action-icon" style="background: #EFF6FF; color: #2563EB;">
+                    <i class="bi bi-pencil-square"></i>
+                </div>
+                <span style="font-size: 13px; font-weight: 600;">Registrar Nota</span>
+            </a>
+            <a href="{% url 'asistencia_tomar' %}" class="quick-action-btn">
+                <div class="quick-action-icon" style="background: #F5F3FF; color: #7C3AED;">
+                    <i class="bi bi-clipboard-check"></i>
+                </div>
+                <span style="font-size: 13px; font-weight: 600;">Tomar Asistencia</span>
+            </a>
+            <a href="{% url 'boletin_generar' %}" class="quick-action-btn">
+                <div class="quick-action-icon" style="background: #FFF7ED; color: #EA580C;">
+                    <i class="bi bi-file-earmark-richtext"></i>
+                </div>
+                <span style="font-size: 13px; font-weight: 600;">Generar Boletines</span>
+            </a>
+            <a href="{% url 'observador_create' %}" class="quick-action-btn">
+                <div class="quick-action-icon" style="background: #FEF2F2; color: #DC2626;">
+                    <i class="bi bi-eye"></i>
+                </div>
+                <span style="font-size: 13px; font-weight: 600;">Nueva Observación</span>
+            </a>
+            <a href="{% url 'parcelador_create' %}" class="quick-action-btn">
+                <div class="quick-action-icon" style="background: var(--bg-main); color: var(--text-secondary);">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                </div>
+                <span style="font-size: 13px; font-weight: 600;">Crear Horario</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Charts
+document.addEventListener('DOMContentLoaded', function() {
+    const rendimientoData = {{ promedios|safe }};
+    const promedioChart = new Chart(document.getElementById('rendimientoChart'), {
+        type: 'bar',
+        data: {
+            labels: rendimientoData.map(p => 'Periodo ' + p.periodo),
+            datasets: [{
+                label: 'Promedio',
+                data: rendimientoData.map(p => parseFloat(p.promedio || 0)),
+                backgroundColor: 'rgba(45, 80, 22, 0.7)',
+                borderColor: '#2D5016',
+                borderWidth: 1,
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, max: 5, grid: { color: '#F0F4EC' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('distribucionChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Transición-5°', '6°-9°', '10°-11°'],
+            datasets: [{
+                data: [
+                    {{ total_estudiantes|default:0 }} * 0.4,
+                    {{ total_estudiantes|default:0 }} * 0.35,
+                    {{ total_estudiantes|default:0 }} * 0.25
+                ],
+                backgroundColor: ['#2D5016', '#4A7023', '#8BC34A'],
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } } }
+        }
+    });
+});
+</script>
+
+{% elif es_profesor %}
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon blue"><i class="bi bi-book"></i></div>
+            <div class="stat-value mt-3">{{ total_materias }}</div>
+            <div class="stat-label">Materias Asignadas</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon green"><i class="bi bi-card-checklist"></i></div>
+            <div class="stat-value mt-3">{{ notas_registradas }}</div>
+            <div class="stat-label">Notas Registradas</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon purple"><i class="bi bi-people"></i></div>
+            <div class="stat-value mt-3">{{ estudiantes_mios }}</div>
+            <div class="stat-label">Mis Estudiantes</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon orange"><i class="bi bi-clipboard-check"></i></div>
+            <div class="stat-value mt-3">{% if asistencia_tomada %}Sí{% else %}No{% endif %}</div>
+            <div class="stat-label">Asistencia Hoy</div>
+        </div>
+    </div>
+</div>
+
+{% if mis_horarios %}
+<div class="card-custom mb-4">
+    <div class="card-header-custom">
+        <div class="card-header-title">
+            <i class="bi bi-clock-fill"></i> Horario de Hoy
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th>Hora</th><th>Materia</th><th>Grado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in mis_horarios %}
+                <tr>
+                    <td>{{ h.hora_inicio }} - {{ h.hora_fin }}</td>
+                    <td>{{ h.materia.nombre }}</td>
+                    <td>{{ h.grado }}°</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<div class="d-flex gap-3 flex-wrap">
+    <a href="{% url 'nota_create' %}" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: #EFF6FF; color: #2563EB;">
+            <i class="bi bi-pencil-square"></i>
+        </div>
+        <span style="font-size: 13px; font-weight: 600;">Registrar Nota</span>
+    </a>
+    <a href="{% url 'asistencia_tomar' %}" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: #F5F3FF; color: #7C3AED;">
+            <i class="bi bi-clipboard-check"></i>
+        </div>
+        <span style="font-size: 13px; font-weight: 600;">Tomar Asistencia</span>
+    </a>
+    <a href="{% url 'observador_create' %}" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: #FEF2F2; color: #DC2626;">
+            <i class="bi bi-eye"></i>
+        </div>
+        <span style="font-size: 13px; font-weight: 600;">Nueva Observación</span>
+    </a>
+</div>
+
+{% elif es_estudiante %}
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-4">
+        <div class="stat-card text-center">
+            <div class="stat-icon green" style="margin: 0 auto;"><i class="bi bi-award"></i></div>
+            <div class="stat-value mt-3">{{ promedio_gral|default:"0" }}</div>
+            <div class="stat-label">Promedio General</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <div class="stat-card text-center">
+            <div class="stat-icon blue" style="margin: 0 auto;"><i class="bi bi-percent"></i></div>
+            <div class="stat-value mt-3">{{ asistencia_pct_est|default:"100" }}%</div>
+            <div class="stat-label">Asistencia Últimos 30 Días</div>
+        </div>
+    </div>
+</div>
+
+<div class="card-custom mb-4">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-card-checklist"></i> Mis Últimas Notas</div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table-custom">
+            <tbody>
+                {% for n in mis_notas %}
+                <tr>
+                    <td><strong>{{ n.materia.nombre }}</strong></td>
+                    <td><span class="badge-custom badge-{% if n.valor >= 4 %}success{% elif n.valor >= 3 %}warning{% else %}danger{% endif %}">{{ n.valor }}</span></td>
+                    <td style="color: var(--text-secondary); font-size: 12px;">{{ n.fecha|date:"d M Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center py-4" style="color: var(--text-secondary);">Sin notas registradas</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif es_padre %}
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="stat-card">
+            <div class="stat-icon green"><i class="bi bi-people-fill"></i></div>
+            <div class="stat-value mt-3">{{ hijos|length }}</div>
+            <div class="stat-label">Hijos Matriculados</div>
+        </div>
+    </div>
+</div>
+
+<div class="card-custom">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-person-check"></i> Mis Hijos</div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table-custom">
+            <tbody>
+                {% for h in hijos %}
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="avatar-sm">{{ h.usuario.username|slice:":1"|upper }}</div>
+                            <div>
+                                <div style="font-weight: 600;">{{ h.usuario.get_full_name }}</div>
+                                <div style="font-size: 11px; color: var(--text-secondary);">{{ h.colegio.nombre }} | {{ h.grado }}° {{ h.paralelo }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a href="{% url 'nota_list' %}?estudiante={{ h.id }}" class="btn-secondary-custom" style="padding: 5px 12px; font-size: 12px;">Ver Notas</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="2" class="text-center py-4" style="color: var(--text-secondary);">Sin hijos registrados</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

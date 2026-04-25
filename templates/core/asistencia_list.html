@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Asistencias{% endblock %}
+{% block page_title %}Asistencias{% endblock %}
+{% block topbar_actions %}
+{% if user.rol == 'rector' or user.rol == 'profesor' %}
+<a href="{% url 'asistencia_tomar' %}" class="btn-primary-custom">
+    <i class="bi bi-clipboard-check"></i> Tomar Asistencia
+</a>
+{% endif %}
+{% endblock %}
+{% block content %}
+<div class="card-custom">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-calendar-check"></i> Registro de Asistencias</div>
+        <div>
+            <form method="get" style="display: inline-flex; gap: 8px; align-items: center;">
+                <input type="date" name="fecha" value="{{ fecha_filtro }}" class="form-control" style="width: auto;">
+                <select name="estado" class="form-control" style="width: auto;">
+                    <option value="">Todos</option>
+                    <option value="asistio" {% if estado_filtro == 'asistio' %}selected{% endif %}>Asistió</option>
+                    <option value="falta" {% if estado_filtro == 'falta' %}selected{% endif %}>Falta</option>
+                    <option value="tarde" {% if estado_filtro == 'tarde' %}selected{% endif %}>Llegó tarde</option>
+                    <option value="justificado" {% if estado_filtro == 'justificado' %}selected{% endif %}>Justificado</option>
+                </select>
+                <button type="submit" class="btn-secondary-custom" style="padding: 5px 12px;"><i class="bi bi-filter"></i> Filtrar</button>
+            </form>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table-custom">
+            <thead><tr><th>Fecha</th><th>Estudiante</th><th>Estado</th><th>Observación</th></tr></thead>
+            <tbody>
+            {% for a in actitudes %}
+            <tr>
+                <td>{{ a.fecha|date:"d M Y" }}</td>
+                <td><strong>{{ a.estudiante.usuario.get_full_name }}</strong></td>
+                <td>
+                    {% if a.estado == 'asistio' %}
+                        <span class="badge-custom badge-success"><i class="bi bi-check"></i> Asistió</span>
+                    {% elif a.estado == 'falta' %}
+                        <span class="badge-custom badge-danger"><i class="bi bi-x"></i> Falta</span>
+                    {% elif a.estado == 'tarde' %}
+                        <span class="badge-custom badge-warning"><i class="bi bi-clock"></i> Tarde</span>
+                    {% else %}
+                        <span class="badge-custom badge-info"><i class="bi bi-check-all"></i> Justificado</span>
+                    {% endif %}
+                </td>
+                <td>{{ a.observacion|default:"—" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-center py-5" style="color: var(--text-secondary);">
+                <i class="bi bi-calendar-check" style="font-size: 40px;"></i>
+                <p class="mt-2">Sin registros para la fecha seleccionada.</p>
+            </td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Año Escolar{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header"><h4>{{ action }} Año Escolar</h4></div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3"><label class="form-label">Colegio *</label>
+                        <select name="colegio" class="form-select" required>
+                            <option value="">-- Seleccionar --</option>
+                            {% for c in colegios %}<option value="{{ c.id }}">{{ c.nombre }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3"><label class="form-label">Año *</label>
+                        <input type="number" name="ano" class="form-control" value="2026" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col"><label class="form-label">Fecha Inicio *</label>
+                            <input type="date" name="fecha_inicio" class="form-control" required></div>
+                        <div class="col"><label class="form-label">Fecha Fin *</label>
+                            <input type="date" name="fecha_fin" class="form-control" required></div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'ano_escolar_list' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-ct">{{ action }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

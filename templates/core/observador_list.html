@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Observador del Estudiante{% endblock %}
+{% block page_title %}Observador del Estudiante{% endblock %}
+{% block topbar_actions %}
+{% if user.rol == 'rector' or user.rol == 'profesor' %}
+<a href="{% url 'observador_create' %}" class="btn-primary-custom">
+    <i class="bi bi-plus-circle"></i> Nueva Observación
+</a>
+{% endif %}
+{% endblock %}
+{% block content %}
+<div class="card-custom">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-eye"></i> Registro de Observaciones</div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table-custom">
+            <thead><tr><th>Fecha</th><th>Estudiante</th><th>Tipo</th><th>Gravedad</th><th>Descripción</th><th>Profesor</th></tr></thead>
+            <tbody>
+            {% for obs in observaciones %}
+            <tr>
+                <td>{{ obs.fecha|date:"d M Y" }}</td>
+                <td><strong>{{ obs.estudiante.usuario.get_full_name }}</strong></td>
+                <td><span class="badge-custom badge-{% if obs.tipo == 'positivo' %}success{% elif obs.tipo == 'negativo' %}danger{% else %}info{% endif %}">{{ obs.get_tipo_display }}</span></td>
+                <td><span class="badge-custom badge-{% if obs.gravedad == 'grave' %}danger{% elif obs.gravedad == 'moderado' %}warning{% else %}neutral{% endif %}">{{ obs.get_gravedad_display }}</span></td>
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ obs.descripcion }}</td>
+                <td>{{ obs.profesor_reporta.get_full_name|default:"—"|truncatechars:20 }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center py-5" style="color: var(--text-secondary);">
+                <i class="bi bi-check-circle" style="font-size: 40px;"></i>
+                <p class="mt-2">Sin observaciones registradas.</p>
+            </td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

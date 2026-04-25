@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Crear Evento{% endblock %}
+{% block page_title %}Crear Evento{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <div class="card-header-title"><i class="bi bi-calendar-plus"></i> Nuevo Evento</div>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Título *</label>
+                            <input type="text" name="titulo" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Tipo *</label>
+                            <select name="tipo" class="form-control" required>
+                                <option value="evento">Evento</option>
+                                <option value="examen">Examen</option>
+                                <option value="reunion">Reunión</option>
+                                <option value="actividad">Actividad Extra</option>
+                                <option value="entrega">Fecha de Entrega</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Fecha *</label>
+                            <input type="date" name="fecha" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-size:13px; font-weight:600;">Hora</label>
+                            <input type="time" name="hora" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size:13px; font-weight:600;">Descripción</label>
+                        <textarea name="descripcion" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'agenda_list' %}" class="btn-secondary-custom">Cancelar</a>
+                        <button type="submit" class="btn-primary-custom">Crear Evento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

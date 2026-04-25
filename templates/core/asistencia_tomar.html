@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Tomar Asistencia{% endblock %}
+{% block page_title %}Tomar Asistencia — {{ fecha_hoy }}{% endblock %}
+{% block content %}
+<div class="card-custom">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-clipboard-check"></i> Registrar Asistencia del {{ fecha_hoy }}</div>
+        <span class="badge-custom badge-info">{{ estudiantes|length }} estudiantes</span>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <table class="table-custom">
+                <thead><tr><th>Estudiante</th><th>Grado</th><th>Estado</th></tr></thead>
+                <tbody>
+                {% for e in estudiantes %}
+                <tr>
+                    <td><strong>{{ e.usuario.get_full_name }}</strong></td>
+                    <td>{{ e.grado }}° {{ e.paralelo }}</td>
+                    <td>
+                        <div style="display: flex; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                                <input type="radio" name="asistencia_{{ e.id }}" value="asistio" checked style="accent-color: var(--primary);"> <span>Asistió</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                                <input type="radio" name="asistencia_{{ e.id }}" value="falta" style="accent-color: #DC2626;"> <span style="color: #DC2626;">Falta</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                                <input type="radio" name="asistencia_{{ e.id }}" value="tarde" style="accent-color: #D97706;"> <span style="color: #D97706;">Tarde</span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center py-4">No hay estudiantes disponibles.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if estudiantes %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                <button type="submit" class="btn-primary-custom" style="padding: 12px 24px;">
+                    <i class="bi bi-check-all"></i> Guardar Asistencia
+                </button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión — Cultura T Educación{% endblock %}
+
+{% block login_content %}
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="login-title">Cultura T Educación</div>
+            <div class="login-subtitle">Plataforma de Gestión Escolar Multi-tenant</div>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-danger mb-3" style="border-radius: 10px; font-size: 13px;">
+            <i class="bi bi-exclamation-triangle-fill"></i> Usuario o contraseña incorrectos.
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label" style="font-size: 13px; font-weight: 600;">Usuario</label>
+                <div class="input-group">
+                    <span class="input-group-text" style="border-radius: 8px 0 0 8px; border-right: none; background: white;">
+                        <i class="bi bi-person" style="color: var(--text-secondary);"></i>
+                    </span>
+                    <input type="text" name="username" class="form-control" 
+                           style="border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 14px;" 
+                           placeholder="Ingrese su usuario" required autofocus>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" style="font-size: 13px; font-weight: 600;">Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-text" style="border-radius: 8px 0 0 8px; border-right: none; background: white;">
+                        <i class="bi bi-lock" style="color: var(--text-secondary);"></i>
+                    </span>
+                    <input type="password" name="password" class="form-control" 
+                           style="border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 14px;" 
+                           placeholder="Ingrese su contraseña" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100" style="padding: 12px; font-size: 14px; margin-top: 8px;">
+                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 12px; color: var(--text-secondary);">
+            © 2026 Cultura T Educación
+        </div>
+    </div>
+</div>
+{% endblock %}

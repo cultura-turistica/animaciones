@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Boletín - {{ boletin.estudiante }}{% endblock %}
+{% block page_title %}Boletín Informativo{% endblock %}
+{% block content %}
+<div class="card-custom" style="max-width: 800px; margin: 0 auto;">
+    <div class="card-header-custom">
+        <div class="card-header-title"><i class="bi bi-file-earmark-richtext"></i> {{ boletin.estudiante }}</div>
+        <a href="javascript:window.print()" class="btn-primary-custom"><i class="bi bi-printer"></i> Imprimir</a>
+    </div>
+    <div class="card-body" style="padding: 30px;">
+        <div style="text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 20px; margin-bottom: 20px;">
+            <h2 style="color: var(--primary); font-weight: 800;">BOLETÍN INFORMATIVO</h2>
+            <p style="font-size: 14px; color: var(--text-secondary);">
+                {{ boletin.ano_escolar.colegio.nombre }}<br>
+                Año: {{ boletin.ano_escolar.ano }} — Periodo: {{ boletin.periodo }}
+            </p>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <p><strong>Estudiante:</strong> {{ boletin.estudiante }}</p>
+                <p><strong>Grado:</strong> {{ boletin.estudiante.grado }}° {{ boletin.estudiante.paralelo }}</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p><strong>Promedio:</strong> <span style="font-size: 24px; font-weight: 800; color: var(--primary);">{{ boletin.promedio_general }}</span></p>
+                <p><strong>Asistencia:</strong> {{ boletin.asistencia_pct }}%</p>
+            </div>
+        </div>
+        <table class="table-custom">
+            <thead><tr><th>Materia</th><th>Nota</th><th>Estado</th></tr></thead>
+            <tbody>
+            {% for n in notas_detalle %}
+            <tr>
+                <td>{{ n.materia.nombre }}</td>
+                <td><strong>{{ n.valor }}</strong></td>
+                <td>
+                    {% if n.valor >= 4.6 %}
+                        <span class="badge-custom badge-success">Superior</span>
+                    {% elif n.valor >= 4.0 %}
+                        <span class="badge-custom badge-info">Alto</span>
+                    {% elif n.valor >= 3.1 %}
+                        <span class="badge-custom badge-warning">Básico</span>
+                    {% else %}
+                        <span class="badge-custom badge-danger">Bajo</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if boletin.observaciones_generales %}
+        <div style="margin-top: 20px; padding: 15px; background: var(--bg-main); border-radius: 8px;">
+            <strong>Observaciones:</strong>
+            <p style="margin-top: 5px;">{{ boletin.observaciones_generales }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
